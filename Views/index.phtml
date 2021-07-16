@@ -1,0 +1,172 @@
+<?php
+/** @var Controller $this */
+
+use Controllers\Core\Controller; ?>
+<?php $this->setTranslateFile('home') ?>
+<div class="pageBody">
+    <div class="bodyHeader">
+        <div class="leftPart">
+            <?= $this->__("<h1 class='regularText'>Explore Discord <span class='coloredText'>servers</span> list</h1>") ?>
+            <h2 class="lightText">
+                <span class="regularText">Discord</span><span class="coloredText">Invites</span>
+                <?= $this->__('is a site that references <strong>Discord</strong> servers to make them known to everyone. Help us grow the great community of Discord by sharing your servers on <strong>Discordinvites</strong>.') ?>
+            </h2>
+            <div class="homeButtonContainer">
+                <a href="<?= $this->getHost() ?>/add">
+                    <div class="getStartedHeaderButton">
+                        <img src="<?= $this->getHost() ?>/assets/logo/plus-2.png" alt="add">&nbsp;&nbsp;<strong
+                                class="regularText"><?= $this->__('Add your guild'); ?></strong>
+                    </div>
+                </a>
+                <a href="<?= $this->getHost() ?>/servers">
+                    <div class="discoverHeaderButton">
+                        <img src="<?= $this->getHost() ?>/assets/logo/search-2.png" alt="add">&nbsp;&nbsp;<strong
+                                class="regularText"><?= $this->__('Our guilds'); ?></strong>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="rightPart">
+            <img src="<?= $this->getHost() ?>/assets/imgs/curve.png" alt="curve">
+        </div>
+    </div>
+    <div class="bodyTitle">
+        <span>
+            <span class="regularText">Discord</span><span class="coloredText">Invites</span>
+            <span class="regularText"><?= $this->__('references all your communities...') ?></span>
+        </span>
+    </div>
+    <div class="phone-ads">
+        <!-- Horizontal footer -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:728px;height:90px;margin-top: 30px;"
+             data-ad-client="ca-pub-6399658775342563"
+             data-ad-slot="2464603978"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+    <div class="statsContainer">
+        <div class="stat" stat="members">
+            <div class="statIcon">
+                <img src="<?= $this->getHost() ?>/assets/logo/group_members.png" alt="groupMember">
+            </div>
+            <div class="statCountContainer">
+                <h2 id="membersCount">
+                    <div class="loading-stats">
+                        <div class="squares"></div>
+                    </div>
+                </h2>
+                <h2 class="statTitle subcolor"><?= $this->__('Registered Members') ?></h2>
+            </div>
+        </div>
+        <div class="stat" stat="servers">
+            <div class="statIcon">
+                <img src="<?= $this->getHost() ?>/assets/logo/servers.png" alt="servers">
+            </div>
+            <div class="statCountContainer">
+                <h2 id="serversCount">
+                    <div class="loading-stats">
+                        <div class="squares"></div>
+                    </div>
+                </h2>
+                <h2 class="statTitle subcolor"><?= $this->__('Registered Servers') ?></h2>
+            </div>
+        </div>
+        <div class="stat" stat="invits">
+            <div class="statIcon">
+                <img src="<?= $this->getHost() ?>/assets/logo/add_invites.png" alt="invites">
+            </div>
+            <div class="statCountContainer">
+                <h2 id="invitesCount">
+                    <div class="loading-stats">
+                        <div class="squares"></div>
+                    </div>
+                </h2>
+                <h2 class="statTitle subcolor"><?= $this->__('Invitations used') ?></h2>
+            </div>
+        </div>
+    </div>
+    <div class="cardsContainer">
+        <div class="card">
+            <div class="leftCardPart">
+                <div class="cardHeader">
+                    <img src="<?= $this->getHost() ?>/assets/logo/discover.png" alt="discover">
+                    <h2 class="regularText h1"><?= $this->__('Discover') ?></h2>
+                </div>
+                <div class="cardBody">
+                    <h3 class="subcolor h2"><?= $this->__("With <span class='coloredText'>DiscordInvites</span>, you can find the servers that best suit you. Opt for a <span class='coloredText'>fast</span> and <span class='coloredText'>fluid</span> search with <span class='coloredText'>categories</span>, <span class='coloredText'>tags</span>, and others to refine your preferences.") ?></h3>
+                </div>
+            </div>
+            <div class="rightCardPart" type="discover"></div>
+        </div>
+        <div class="card" type="manage">
+            <div class="rightCardPart" type="manage"></div>
+            <div class="leftCardPart">
+                <div class="cardHeader">
+                    <img src="<?= $this->getHost() ?>/assets/logo/manage.png" alt="manage">
+                    <h2 class="regularText h1"><?= $this->__('Management') ?></h2>
+                </div>
+                <div class="cardBody">
+                    <h3 class="subcolor h2"><?= $this->__("A simple and efficient <a href='./dashboard'>dashboard</a> is at your disposal to manage the servers you added. You must regularly <strong>bump</strong> your server so that it positions itself at the top of the list.") ?></h3>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="leftCardPart">
+                <div class="cardHeader">
+                    <img src="<?= $this->getHost() ?>/assets/logo/charts.png" alt="charts">
+                    <h2 class="regularText h1"><?= $this->__('Statistics') ?></h2>
+                </div>
+                <div class="cardBody">
+                    <h3 class="subcolor h2"><?= $this->__("Thanks to the <strong>statistics</strong> that we offer you, you can know the activity of a server before even joining it.") ?></h3>
+                </div>
+            </div>
+            <div class="rightCardPart" type="statistics"></div>
+        </div>
+        <div class="card" type="invites">
+            <div class="rightCardPart" type="invites"></div>
+            <div class="leftCardPart">
+                <div class="cardHeader">
+                    <img src="<?= $this->getHost() ?>/assets/logo/invites.png" alt="invites">
+                    <h2 class="regularText h1"><?= $this->__('Invitations') ?></h2>
+                </div>
+                <div class="cardBody">
+                    <h3 class="subcolor h2"><?= $this->__("Create your own personalized invitations in your <a href='./dashboard'>dashboard</a> through our <span class='coloredText'>dinvites.net</span> domain. The possible point is that this invitation cannot be <span class='coloredText'>expired</span> and <span class='coloredText'>statistics</span> are coming very soon!") ?></h3>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="leftCardPart">
+                <div class="cardHeader">
+                    <img src="<?= $this->getHost() ?>/assets/logo/reaction-home.png" alt="reaction">
+                    <h2 class="regularText h1"><?= $this->__('Reactions') ?></h2>
+                </div>
+                <div class="cardBody">
+                    <h3 class="subcolor h2"><?= $this->__("You can now give us <span class='coloredText'>feedback</span> on your experience in your favorite servers. <a href='reactions/add'>Add a reaction</a> on your servers and see what others think by going to the <a href='reactions'>reaction list!</a>") ?></h3>
+                </div>
+            </div>
+            <div class="rightCardPart" type="reaction"></div>
+        </div>
+    </div>
+    <div id="partner" class="homeGetStarted">
+        <div class="partnerTitleContainer">
+            <h2 class="regularText text-underlined h1">
+                <?= $this->__("<img src='./assets/logo/badges/new_partner_badge.png' alt='partner'> Partnership <img src='./assets/logo/badges/new_partner_badge.png' alt='partner'>") ?>
+            </h2>
+            <h3 class="regularText">
+                <span class="lightTyFooter">
+                    <?= $this->__('Want to become a DiscordInvites partner ?') ?>
+                    <br/>
+                    <?= $this->__("Check if you meet our requirements by going to our <a href='%' target='_blank' class='regularText'>FAQ</a> area, then contact us by clicking below.", $this->getHost() . '/faq') ?>
+                </span>
+                <br/>
+                <?= $this->__("All communities with less than 5000 members will be automatically refused") ?>
+            </h3>
+        </div>
+        <a href="<?= $this->getHost() ?>/contact">
+            <div class="getStartedPartnerButton">
+                <?= $this->__('Contact us') ?>
+            </div>
+        </a>
+    </div>
