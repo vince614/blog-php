@@ -1,17 +1,4 @@
 <?php
-/**
- * This file is part of General for DiscordInvites.
- *
- * @license All rights reserved
- * @author <support@dinvites.net> <support-discordinvites>
- * @category General
- * @package General
- * @copyright Copyright (c) 2020 DiscordInvites (https://discordinvites.net/)
- */
-
-use Controllers\Core\Controller;
-use Controllers\LoginController;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Models\Core\Database;
 
 /**

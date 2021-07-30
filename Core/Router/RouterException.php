@@ -1,9 +1,6 @@
 <?php
-namespace Router;
+namespace Core\Router;
 use Exception;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Throwable;
 
 /**
  * Class RouterException

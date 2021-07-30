@@ -28,6 +28,13 @@ try {
 // Set router URL
 $router = new Router($general->getUrl());
 
+/**
+ * Index route
+ * @GET & @POST route
+ */
+$router->get('/', function () {});
+$router->post('/', function () {});
+
 // Run router
 try {
     $router->run();

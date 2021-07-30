@@ -1,14 +1,4 @@
 <?php
-/**
- * This file is part of Core_Controller for DiscordInvites.
- *
- * @license All rights reserved
- * @author <support@dinvites.net> <support-discordinvites>
- * @category Core
- * @package Core
- * @copyright Copyright (c) 2020 DiscordInvites (https://discordinvites.net/)
- */
-
 namespace Controllers\Core;
 
 use General;
@@ -32,18 +22,6 @@ class Controller extends General
      * @var string
      */
     private $_view;
-
-    /**
-     * Locale
-     * @var string
-     */
-    private $_locale = 'en';
-
-    /**
-     * Translate file
-     * @var string
-     */
-    private $_tranlateFile;
 
     /**
      * Stylesheet paths
