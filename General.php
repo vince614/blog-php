@@ -143,4 +143,9 @@ class General extends Database
 
     }
 
+    public function test()
+    {
+        exit('je suis un test');
+    }
+
 }

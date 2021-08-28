@@ -1,6 +1,7 @@
 <?php
 namespace Core\Utils;
 
+use Core\Configuration\Config;
 use Core\Models\Database;
 
 require_once 'Request.php';
@@ -9,7 +10,7 @@ require_once 'Request.php';
  * Class GoogleRecaptcha
  * @package Core\Utils
  */
-class GoogleRecaptcha extends Database
+class Recaptcha
 {
     const GOOGLE_RECAPTCHA_API_URL = "https://www.google.com/recaptcha/api/siteverify";
 
@@ -21,11 +22,11 @@ class GoogleRecaptcha extends Database
      */
     protected $_request;
 
-    public function __construct($publicKey, $secretKey)
+    public function __construct()
     {
-        parent::__construct();
-        $this->_publicKey = $publicKey;
-        $this->_secretKey = $secretKey;
+        $config = new Config();
+        $this->_publicKey = $config->getConfig('public_key');
+        $this->_secretKey = $config->getConfig('secret_key');
         $this->_request = new Request();
     }
 
@@ -34,7 +35,7 @@ class GoogleRecaptcha extends Database
      *
      * @return bool
      */
-    public function googleRecaptchaVerification()
+    public function recaptchaVerification()
     {
         if ($this->_request->isPost()) {
             $gRecaptchaResponse = $this->_request->getPost('g-recaptcha-response');

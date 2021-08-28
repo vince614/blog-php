@@ -1,50 +1,51 @@
 <?php
 namespace Core\Models;
 
+use Dotenv\Dotenv;
 use PDO;
+use PDOStatement;
 
 /**
  * Class Database
  * @package Core
  */
-abstract class Database
+class Database
 {
     /**
      * @var PDO
      */
-    protected $_pdo;
-
-    /**
-     * Params to connect with PDO to database
-     *
-     * @var string
-     */
-    protected $_hostname  = "localhost";
-    protected $_database  = "blog-php";
-    protected $_charset   = "utf8mb4";
-    protected $_user      = "root";
-    protected $_password  = "";
+    public $pdo;
 
     /**
      * Core_Mysql constructor.
      */
     public function __construct()
     {
-        $this->initPDO();
+        self::initEnv();
+        self::initPDO();
     }
 
     /**
-     * Init pdo
+     * Init PDO
      */
     private function initPDO()
     {
-        if (!$this->_pdo) {
-            $this->_pdo = new PDO(
-                "mysql:host={$this->_hostname};dbname={$this->_database};charset={$this->_charset}",
-                $this->_user,
-                $this->_password
+        if (!$this->pdo) {
+            $this->pdo = new PDO(
+                "mysql:host={$_ENV['DATABASE_HOSTNAME']};dbname={$_ENV['DATABASE_NAME']};charset={$_ENV['DATABASE_CHARSET']}",
+                $_ENV['DATABASE_USER'],
+                $_ENV['DATABASE_PASSWORD']
             );
         }
+    }
+
+    /**
+     * Init environement variable
+     */
+    private function initEnv()
+    {
+        $dotenv = Dotenv::createImmutable(ROOT);
+        $dotenv->load();
     }
 
     /**
@@ -54,6 +55,48 @@ abstract class Database
      */
     public function getPDO()
     {
-        return $this->_pdo;
+        return $this->pdo;
+    }
+
+    /**
+     * Check if request is success
+     *
+     * @param PDOStatement $req
+     * @return bool
+     */
+    public function isSuccess(PDOStatement $req)
+    {
+        return $req->rowCount() > 0;
+    }
+
+
+    /**
+     * Update multiple elements
+     *
+     * @param $table
+     * @param $params
+     * @return bool
+     */
+    public function updateMultiple($table, $params)
+    {
+        $i = 0;
+        $sql = "UPDATE $table SET ";
+        $paramsCount = count($params);
+        $array = [];
+        foreach ($params as $field => $value) {
+            if ($field === "id") continue;
+            $sql .= $paramsCount - 2 == $i ?
+                "$field = ? " :
+                "$field = ?, ";
+            $array[] = $value;
+            $i++;
+        }
+        $array[] = (int) $params['id'];
+        $sql .= "WHERE id = ?";
+
+        $req = Database::getPDO()->prepare($sql);
+        $req->execute($array);
+        return Database::isSuccess($req);
+
     }
 }

@@ -1,8 +1,6 @@
 <?php
 namespace Core\Router;
 
-use Controllers\ErrorController;
-
 /**
  * Class Router
  * @package Router
@@ -97,8 +95,7 @@ class Router
                 return $route->call();
             }
         }
-        new RouterException('No matching routes');
-        return $this->_error404();
+        return new RouterException('No matching routes');
     }
 
     /**
@@ -114,17 +111,6 @@ class Router
             throw new RouterException('No route matches this name');
         }
         return $this->namedRoutes[$name]->getUrl($params);
-    }
-
-    /**
-     * Error 404
-     *
-     * @return ErrorController
-     */
-    private function _error404()
-    {
-        require_once 'Controllers/ErrorController.php';
-        return new ErrorController('404');
     }
 
 }

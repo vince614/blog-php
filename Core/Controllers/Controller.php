@@ -1,6 +1,7 @@
 <?php
 namespace Core\Controllers;
 
+use Core\Utils\Flash;
 use General;
 use Helpers\Recaptcha\Data;
 
@@ -8,7 +9,7 @@ use Helpers\Recaptcha\Data;
  * Class Controller
  * @package Controllers\Core
  */
-abstract class Controller
+class Controller
 {
 
     /**
@@ -98,24 +99,6 @@ abstract class Controller
         require_once ROOT . '/Helpers/' . $helperName . '/Data.php';
         $className = "Helpers\\" . $helperName . "\\Data";
         return new $className;
-    }
-
-    /**
-     * Google Recaptcha
-     *
-     * @return bool
-     */
-    public function googleRecaptcha()
-    {
-        if (isset($_POST['g-recaptcha-response'])) {
-            /** @var Data $recaptchaHelper */
-            $recaptchaHelper = $this->getHelper('Recaptcha');
-            return $recaptchaHelper->validateCaptcha(
-                $_POST['g-recaptcha-response'],
-                $this->getConfig('grecaptcha_secretkey')
-            );
-        }
-        return false;
     }
 
 }

@@ -1,0 +1,20 @@
+{
+    "name": "kdc/blog-php",
+    "description": "blog PHP",
+    "authors": [
+        {
+            "name": "vvaufrey",
+            "email": "vvaufrey@kaliop.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core"
+        }
+    }
+}

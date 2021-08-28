@@ -1,39 +1,55 @@
 <?php
-use Router\Router;
-use Router\RouterException;
 
-// Define root
+use App\App;
+use App\Models\UserModel;
+use Core\Configuration\Config;
+use Core\Router\Router;
+use Core\Router\RouterException;
+
 define('ROOT', __DIR__);
 
 // Start session
 session_start();
 
-// Require
-require_once "Router/Router.php";
-require_once "Router/Route.php";
-require_once "Router/RouterException.php";
-require_once "General.php";
+// Require autoload
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/app/App.php';
+require __DIR__ . '/Core/Exception/Exception.php';
 
-// General class
-$general = new General();
+// Get config
+$config = new Config();
+$url = $config->getConfig(Config::SECURE_URL_CONFIG_CODE) ?
+            $config->getConfig(Config::SECURE_URL_CONFIG_CODE) :
+            $config->getConfig(Config::UNSECURE_URL_CONFIG_CODE);
 
-// Load configuration
-try {
-    $general->start($general->getUrl());
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit;
+
+
+// Maintenance
+$maintenanceMode = $config->getConfig(Config::MAINTENANCE_MODE_CONFIG_CODE) == 1;
+if ($maintenanceMode) {
+    // Maintenance
 }
 
+$app = new App();
+$app->app();
+
+/** @var UserModel $userModel */
+$userModel = App::getModel('user');
+$user = $userModel->load(1, 'name');
+
+$user->setName('Vince');
+$userModel->save($user);
+exit;
+
 // Set router URL
-$router = new Router($general->getUrl());
+$router = new Router($url);
 
 /**
  * Index route
  * @GET & @POST route
  */
-$router->get('/', function () {});
-$router->post('/', function () {});
+$router->get('/test', function () {});
+$router->post('/test', function () {});
 
 // Run router
 try {
