@@ -7,10 +7,10 @@ use Core\Models\Model;
  * Class UserModel
  * @package App\Models
  */
-class UserModel extends Model
+class PostModel extends Model
 {
     /**
-     * UserModel constructor.
+     * PostModel constructor.
      * @param $name
      */
     public function __construct($name)

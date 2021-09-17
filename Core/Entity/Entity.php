@@ -2,6 +2,9 @@
 
 namespace Core\Entity;
 
+use App_Core_Exception;
+use Core\Models\Model;
+
 /**
  * Class Entity
  * @package Core\Entity
@@ -62,6 +65,41 @@ class Entity
     public function getAttributes()
     {
         return $this->_attributes;
+    }
+
+    /**
+     * Save entity
+     *
+     * @throws App_Core_Exception
+     */
+    public function save()
+    {
+        $model = new Model;
+        $model->save($this, $this->getTableName());
+    }
+
+    /**
+     * Delete entity
+     *
+     * @throws App_Core_Exception
+     */
+    public function delete()
+    {
+        $model = new Model;
+        $model->delete($this, $this->getTableName());
+    }
+
+    /**
+     * Get table name
+     *
+     * @return false|string|string[]|null
+     */
+    private function getTableName()
+    {
+        $className = get_class($this);
+        $className = @end(explode("\\", $className));
+        $className = str_replace('Entity', '', $className);
+        return mb_strtolower($className);
     }
 
 }

@@ -4,13 +4,13 @@ namespace App\Models;
 use Core\Models\Model;
 
 /**
- * Class UserModel
+ * Class CommentModel
  * @package App\Models
  */
-class UserModel extends Model
+class CommentModel extends Model
 {
     /**
-     * UserModel constructor.
+     * CommentModel constructor.
      * @param $name
      */
     public function __construct($name)

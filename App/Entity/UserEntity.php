@@ -38,7 +38,7 @@ class UserEntity extends Entity
      */
     public function getId()
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
     /**
@@ -70,7 +70,7 @@ class UserEntity extends Entity
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return (int) $this->created_at;
     }
 
     /**
