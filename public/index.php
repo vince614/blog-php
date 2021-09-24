@@ -1,6 +1,9 @@
 <?php
 
 use App\App;
+use App\Entity\CommentEntity;
+use App\Entity\UserEntity;
+use App\Models\CommentModel;
 use App\Models\UserModel;
 use Core\Configuration\Config;
 use Core\Router\Router;
@@ -33,12 +36,19 @@ if ($maintenanceMode) {
 $app = new App();
 $app->app();
 
-/** @var UserModel $userModel */
-$userModel = App::getModel('user');
-$user = $userModel->load(1, 'name');
+$userModel = new UserModel('user');
+$collection = $userModel
+    ->addAttributToFilter('name', 'Vince')
+    ->addAttributToFilter('id', ['>', 0])
+    ->addAttributToFilter('email', ['like', '%vince%'])
+    ->getCollection();
 
-$user->setName('Vince');
-$userModel->save($user);
+
+foreach ($collection as $user) {
+    $user->setName('viince');
+    $user->save();
+    $user->delete();
+}
 exit;
 
 // Set router URL

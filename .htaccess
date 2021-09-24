@@ -23,10 +23,6 @@
 ############################################
 ## MVC
 
-    RewriteRule ^(.*)$ index.php?url=$1 [L,NC,QSA]
-
-    Redirect 301 https://www.discordinvites.net/ https://discordinvites.net/
-    Redirect 301 http://discordinvites.net/ https://discordinvites.net/
-    Redirect 301 http://www.discordinvites.net/ https://discordinvites.net/
+    RewriteRule ^(.*)$ public/index.php?url=$1 [L,NC,QSA]
 
 </IfModule>

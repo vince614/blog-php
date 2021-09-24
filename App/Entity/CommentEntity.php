@@ -18,11 +18,6 @@ class CommentEntity extends Entity
     /**
      * @var string
      */
-    private $title;
-
-    /**
-     * @var string
-     */
     private $content;
 
     /**
@@ -76,14 +71,6 @@ class CommentEntity extends Entity
     public function getIsVerified()
     {
         return (int) $this->is_verified;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -159,16 +146,6 @@ class CommentEntity extends Entity
     public function setPostId($post_id)
     {
         $this->post_id = $post_id;
-        return $this;
-    }
-
-    /**
-     * @param string $title
-     * @return CommentEntity
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
         return $this;
     }
 

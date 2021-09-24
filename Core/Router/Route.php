@@ -1,6 +1,8 @@
 <?php
 namespace Core\Router;
 
+use Core\Acl\ACL;
+
 /**
  * Class Route
  * @package Router
@@ -33,14 +35,21 @@ class Route
     private $params = [];
 
     /**
+     * @var array
+     */
+    private $acl = [];
+
+    /**
      * Route constructor.
      * @param $path
      * @param $callable
+     * @param $acl
      */
-    public function __construct($path, $callable)
+    public function __construct($path, $callable, $acl)
     {
         $this->path = trim($path, '/');  // On retire les / inutils
         $this->callable = $callable;
+        $this->acl = $acl;
     }
 
     /**
@@ -69,15 +78,19 @@ class Route
     public function call()
     {
         $this->load();
-        return call_user_func_array($this->callable, $this->matches);
+        if ($this->callable) {
+            return call_user_func_array($this->callable, $this->matches);
+        }
     }
 
     /**
-     * Load model & controller
+     * Load controller
      */
     private function load()
     {
-        require_once 'Models/Core/Database.php';
+        // ACL
+        $ACL = new ACL($this->acl);
+        $ACL->run();
 
         // Index controller
         if ($this->path === "") {
@@ -86,9 +99,9 @@ class Route
 
         $controller = ucfirst($this->path);
 
-        $controllerNamespace = "Controllers\\";
+        $controllerNamespace = "App\\Controllers\\";
         $controllerClass = $controller . "Controller";
-        $controllerFile = "Controllers/" . $controllerClass . '.php';
+        $controllerFile = ROOT . "/App/Controllers/" . $controllerClass . '.php';
         $controllerClassWithNamespace = $controllerNamespace . $controllerClass;
 
         // If controller exist

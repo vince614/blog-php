@@ -50,6 +50,19 @@ class Request
     }
 
     /**
+     * Get url with GET_METHOD
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if (isset($_GET['url'])) {
+            return $_GET['url'];
+        }
+        return '/';
+    }
+
+    /**
      * @return mixed
      */
     public function getRequestMethod()
@@ -68,10 +81,16 @@ class Request
     /**
      * Get session
      *
+     * @param null $key
      * @return mixed
      */
-    public function getSession()
+    public function getSession($key = null)
     {
+        if ($key) {
+            return isset($_SESSION[$key]) ?
+                $_SESSION[$key] :
+                false;
+        }
         return $_SESSION;
     }
 
@@ -81,7 +100,11 @@ class Request
      */
     public function getCookies($key = null)
     {
-        if ($key) return $_COOKIE[$key];
+        if ($key) {
+            return isset($_COOKIE[$key]) ?
+                $_COOKIE[$key] :
+                false;
+        }
         return $_COOKIE;
     }
 

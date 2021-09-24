@@ -34,6 +34,11 @@ class UserEntity extends Entity
     private $created_at;
 
     /**
+     * @var int
+     */
+    private $is_admin;
+
+    /**
      * @return int
      */
     public function getId()
@@ -71,6 +76,14 @@ class UserEntity extends Entity
     public function getCreatedAt()
     {
         return (int) $this->created_at;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsAdmin()
+    {
+        return $this->is_admin;
     }
 
     /**
@@ -120,6 +133,16 @@ class UserEntity extends Entity
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * @param int $is_admin
+     * @return UserEntity
+     */
+    public function setIsAdmin($is_admin)
+    {
+        $this->is_admin = $is_admin;
         return $this;
     }
 }

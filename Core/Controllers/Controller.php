@@ -1,9 +1,7 @@
 <?php
 namespace Core\Controllers;
 
-use Core\Utils\Flash;
-use General;
-use Helpers\Recaptcha\Data;
+use App\Controllers\ErrorController;
 
 /**
  * Class Controller
@@ -25,23 +23,45 @@ class Controller
     private $_view;
 
     /**
+     * @var string
+     */
+    public $path;
+
+    /**
+     * Controller constructor.
+     * @param $path
+     */
+    public function __construct($path)
+    {
+        $this->path = $path;
+        $this->index();
+    }
+
+    /**
+     * Index
+     */
+    public function index()
+    {
+        if (!isset($this->path)) new ErrorController('Errors.404');
+        if (method_exists($this, 'beforeRender')) $this->beforeRender();
+        $this->render($this->path);
+        if (method_exists($this, 'afterRender')) $this->afterRender();
+    }
+
+    /**
      * Display HTML content on the view
      *
      * @param $view
-     * @return false|string
+     * @return mixed|void
      */
     protected function render($view)
     {
         $this->_view = $view;
         extract($this->vars);
-
-        /**
-         * Include template views
-         */
-        $viewFile = 'Views/' . str_replace('.', '/', $view) . '.phtml';
-        file_exists($viewFile) ?
+        $viewFile = ROOT . '/App/Views/' . str_replace('.', '/', $view) . '.phtml';
+        return file_exists($viewFile) ?
             require $viewFile :
-            $this->notFound();
+            new ErrorController('Errors.404');
     }
 
     /**
@@ -63,7 +83,7 @@ class Controller
     public function notFound()
     {
         header('HTTP/1.0 404 Not Found');
-        return die('La page est introuvable');
+        exit;
     }
 
     /**
@@ -72,33 +92,7 @@ class Controller
     public function forbidden()
     {
         header('HTTP/1.0 403 Forbidden');
-        die('Accès interdit');
-    }
-
-    /**
-     * Init model
-     *
-     * @param $modelName
-     * @return mixed
-     */
-    public function initModel($modelName)
-    {
-        require_once ROOT . '/Models/' . $modelName . '.php';
-        $className = "Models\\" . $modelName;
-        return new $className;
-    }
-
-    /**
-     * Get helper
-     *
-     * @param $helperName
-     * @return mixed
-     */
-    public function getHelper($helperName)
-    {
-        require_once ROOT . '/Helpers/' . $helperName . '/Data.php';
-        $className = "Helpers\\" . $helperName . "\\Data";
-        return new $className;
+        exit;
     }
 
 }

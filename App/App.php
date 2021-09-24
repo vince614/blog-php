@@ -61,18 +61,6 @@ final class App
     }
 
     /**
-     * Get instance of table
-     *
-     * @param $name
-     * @return mixed
-     */
-    public function getTable($name)
-    {
-        $class_name = '\\App\\Table\\' . ucfirst($name) . 'Table';
-        return new $class_name($this->getDb());
-    }
-
-    /**
      * Register a new variable
      *
      * @param string $key
@@ -143,7 +131,6 @@ final class App
     public static function getModel($modelClass)
     {
         $modelClass = ucfirst($modelClass) . "Model";
-        require_once ROOT . '/App//Models/' . $modelClass . '.php';
         $className = "App\\Models\\" . $modelClass;
         if (class_exists($className)) {
             return new $className;

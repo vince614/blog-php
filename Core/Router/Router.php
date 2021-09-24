@@ -1,6 +1,8 @@
 <?php
 namespace Core\Router;
 
+use App\Controllers\ErrorController;
+
 /**
  * Class Router
  * @package Router
@@ -39,25 +41,27 @@ class Router
      * Add route with GET_METHOD
      * @param $path
      * @param $callable
+     * @param $acl
      * @param null $name
      * @return Route
      */
-    public function get($path, $callable, $name = null)
+    public function get($path, $callable, $acl = [], $name = null)
     {
-        return $this->add($path, $callable, $name, 'GET');
+        return $this->add($path, $callable, $acl, $name, 'GET');
     }
 
     /**
      * Add new route
      * @param $path
      * @param $callable
+     * @param $acl
      * @param $name
      * @param $method
      * @return Route
      */
-    private function add($path, $callable, $name, $method)
+    private function add($path, $callable, $acl, $name, $method)
     {
-        $route = new Route($path, $callable);
+        $route = new Route($path, $callable, $acl);
         $this->routes[$method][] = $route;
         if (is_string($callable) && $name === null) {
             $name = $callable;
@@ -72,12 +76,13 @@ class Router
      * Add route with POST_METHOD
      * @param $path
      * @param $callable
+     * @param array $acl
      * @param null $name
      * @return Route
      */
-    public function post($path, $callable, $name = null)
+    public function post($path, $callable, $acl = [], $name = null)
     {
-        return $this->add($path, $callable, $name, 'POST');
+        return $this->add($path, $callable, $acl, $name, 'POST');
     }
 
     /**
@@ -95,7 +100,7 @@ class Router
                 return $route->call();
             }
         }
-        return new RouterException('No matching routes');
+        return new ErrorController('Errors.404');
     }
 
     /**
