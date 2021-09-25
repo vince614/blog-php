@@ -1,5 +1,7 @@
 <IfModule mod_rewrite.c>
 
+    DirectoryIndex public/index.php
+
 ############################################
 ## enable rewrites
 

@@ -83,6 +83,13 @@ class Route
         }
     }
 
+    private function formatePath()
+    {
+        // Index controller
+        if ($this->path === "") $this->path = "index";
+        $this->path = rtrim(explode(':', $this->path)[0], "/");
+    }
+
     /**
      * Load controller
      */
@@ -92,10 +99,8 @@ class Route
         $ACL = new ACL($this->acl);
         $ACL->run();
 
-        // Index controller
-        if ($this->path === "") {
-            $this->path = "index";
-        }
+        // Formate path
+        $this->formatePath();
 
         $controller = ucfirst($this->path);
 
@@ -106,8 +111,7 @@ class Route
 
         // If controller exist
         if (file_exists($controllerFile)) {
-            require_once $controllerFile;
-            new $controllerClassWithNamespace($this->path);
+            new $controllerClassWithNamespace($this->path, $this->matches);
         }
     }
 }

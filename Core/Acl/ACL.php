@@ -3,9 +3,8 @@
 namespace Core\Acl;
 
 use App\App;
-use App\Controllers\ErrorController;
-use App\Entity\UserEntity;
 use App\Models\UserModel;
+use Core\Controllers\ErrorController;
 use Core\Utils\Request;
 
 /**
@@ -43,6 +42,11 @@ class ACL
         $this->request = new Request();
     }
 
+    /**
+     * Run ACL checker
+     *
+     * @return ErrorController
+     */
     public function run()
     {
         $acces = $this->checkACL();
@@ -56,7 +60,7 @@ class ACL
      *
      * @return bool
      */
-    public function checkACL()
+    protected function checkACL()
     {
         $userLvl = $this->getUserLvl();
         if ($this->acl == self::EVERYONE) return true;
@@ -74,7 +78,7 @@ class ACL
      *
      * @return int
      */
-    public function getUserLvl()
+    protected function getUserLvl()
     {
         if ($user = $this->request->getSession('user')) {
             /** @var UserModel $userModel */

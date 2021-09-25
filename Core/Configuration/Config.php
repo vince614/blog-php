@@ -17,14 +17,7 @@ class Config extends Database
     const UNSECURE_URL_CONFIG_CODE      = 'unsecure_url';
     const SECURE_URL_CONFIG_CODE        = 'secure_url';
     const MAINTENANCE_MODE_CONFIG_CODE  = 'maintenance_mode';
-
-    /**
-     * Config constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    const LOCAL_MODE_CONFIG_CODE        = 'local_mode';
 
     /**
      * Get config

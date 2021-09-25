@@ -39,12 +39,10 @@ final class App
      *
      * @return App
      */
-    public function app()
+    public static function init()
     {
-        if (!self::$_instance) {
-            self::$_instance = new App();
-        }
-        self::_initConfig();
+        if (!self::$_instance) self::$_instance = new App();
+        if (!self::$_config) self::$_config = new Config();
         return self::$_instance;
     }
 
@@ -114,7 +112,7 @@ final class App
      * @param $code
      * @return mixed
      */
-    public function getConfig($code)
+    public static function getConfig($code)
     {
         if (!self::$_config) {
             self::_initConfig();
@@ -165,6 +163,18 @@ final class App
     private function _initConfig()
     {
         self::$_config = new Config();
+    }
+
+    /**
+     * Retrieve host url
+     *
+     * @return mixed
+     */
+    public static function getHost()
+    {
+        return App::getConfig(Config::LOCAL_MODE_CONFIG_CODE) == 1 ?
+            App::getConfig(Config::UNSECURE_URL_CONFIG_CODE) :
+            App::getConfig(Config::SECURE_URL_CONFIG_CODE);
     }
 
 }

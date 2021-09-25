@@ -2,10 +2,10 @@
 
 // @TODO securise public folder. (droits fichier)
 
-use App\Controllers\ErrorController;
+use App\App;
 use Core\Acl\ACL;
 use Core\Configuration\Config;
-use Core\Controllers\Controller;
+use Core\Controllers\ErrorController;
 use Core\Router\Router;
 use Core\Router\RouterException;
 use Core\Utils\Request;
@@ -20,9 +20,11 @@ require '../vendor/autoload.php';
 require '../app/App.php';
 require '../Core/Exception/Exception.php';
 
+// Init app
+App::init();
+
 // Maintenance
-$config = new Config();
-$maintenanceMode = $config->getConfig(Config::MAINTENANCE_MODE_CONFIG_CODE) == 1;
+$maintenanceMode = App::getConfig(Config::MAINTENANCE_MODE_CONFIG_CODE) == 1;
 if ($maintenanceMode) {
     return new ErrorController('maintenance');
 }
@@ -35,14 +37,32 @@ $router = new Router($request->getUrl());
  * Index route
  * @GET METHOD
  */
-$router->get('/index', null, ACL::EVERYONE);
+$router->get('/');
 
 /**
- * Index route
- * @GET & @POST METHOD
+ * Blog list route
+ * @GET METHOD
  */
-$router->get('/test', null);
-$router->post('/test', null);
+$router->get('/blog');
+
+/**
+ * Unique blog route
+ * @GET METHOD
+ */
+$router->get('/blog/:id', ACL::EVERYONE);
+
+/**
+ * Unique blog route
+ * @GET METHOD
+ */
+$router->get('/login', ACL::NOT_LOGGED_IN);
+$router->get('/register', ACL::NOT_LOGGED_IN);
+
+/**
+ * Admin route
+ * @GET METHOD
+ */
+$router->get('/admin', ACL::ADMIN);
 
 // Run router
 try {

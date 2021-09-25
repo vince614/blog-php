@@ -1,7 +1,8 @@
 <?php
 namespace Core\Router;
 
-use App\Controllers\ErrorController;
+use Core\Acl\ACL;
+use Core\Controllers\ErrorController;
 
 /**
  * Class Router
@@ -45,7 +46,7 @@ class Router
      * @param null $name
      * @return Route
      */
-    public function get($path, $callable, $acl = [], $name = null)
+    public function get($path, $acl = ACL::EVERYONE, $callable = null, $name = null)
     {
         return $this->add($path, $callable, $acl, $name, 'GET');
     }
@@ -76,11 +77,11 @@ class Router
      * Add route with POST_METHOD
      * @param $path
      * @param $callable
-     * @param array $acl
+     * @param int $acl
      * @param null $name
      * @return Route
      */
-    public function post($path, $callable, $acl = [], $name = null)
+    public function post($path, $acl = ACL::EVERYONE, $callable = null, $name = null)
     {
         return $this->add($path, $callable, $acl, $name, 'POST');
     }
