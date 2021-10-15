@@ -12,8 +12,10 @@ class Controller
     /**
      * Blocks
      */
-    const HEADER_BLOCK = 'header';
-    const FOOTER_BLOCK = 'footer';
+    const HEADER_BLOCK  = 'header';
+    const NAVBAR_BLOCK  = 'navBar';
+    const FOOTER_BLOCK  = 'footer';
+    const SCRIPTS_BLOCK = 'scripts';
 
     /**
      * Variables
@@ -76,7 +78,9 @@ class Controller
      */
     protected function beforeRender()
     {
+        $this->setStylesheetPath('theme.css');
         $this->setBlock(self::HEADER_BLOCK);
+        $this->setBlock(self::NAVBAR_BLOCK);
     }
 
     /**
@@ -85,6 +89,7 @@ class Controller
     protected function afterRender()
     {
         $this->setBlock(self::FOOTER_BLOCK);
+        $this->setBlock(self::SCRIPTS_BLOCK);
     }
 
     /**
@@ -96,7 +101,7 @@ class Controller
     public function setBlock($block)
     {
         $blockFile = ROOT . '/App/Views/Blocks/' . str_replace('.', '/', $block) . '.phtml';
-        if (file_exists($blockFile)) {
+        if (is_file($blockFile)) {
             require $blockFile;
         }
         return $this;

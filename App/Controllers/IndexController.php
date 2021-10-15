@@ -10,15 +10,4 @@ use Core\Controllers\Controller;
 class IndexController extends Controller
 {
 
-    public function beforeRender()
-    {
-        $this->setStylesheetPath('theme.css');
-        parent::beforeRender();
-    }
-
-    public function afterRender()
-    {
-
-    }
-
 }

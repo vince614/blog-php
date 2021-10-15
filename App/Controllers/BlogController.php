@@ -10,9 +10,4 @@ use Core\Controllers\Controller;
 class BlogController extends Controller
 {
 
-    protected function beforeRender()
-    {
-        var_dump($this->params);
-    }
-
 }
