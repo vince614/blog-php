@@ -38,7 +38,7 @@ class Request
      */
     public function isPost()
     {
-        return isset($_POST);
+        return isset($_POST) && !empty($_POST);
     }
 
     /**

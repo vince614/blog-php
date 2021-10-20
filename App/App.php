@@ -128,10 +128,10 @@ final class App
      */
     public static function getModel($modelClass)
     {
-        $modelClass = ucfirst($modelClass) . "Model";
-        $className = "App\\Models\\" . $modelClass;
+        $_modelClass = ucfirst($modelClass) . "Model";
+        $className = "App\\Models\\" . $_modelClass;
         if (class_exists($className)) {
-            return new $className;
+            return new $className($modelClass);
         }
         return false;
     }

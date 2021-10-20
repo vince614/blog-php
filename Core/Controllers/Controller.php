@@ -51,6 +51,11 @@ class Controller
     protected $_scriptsPaths = [];
 
     /**
+     * @var array
+     */
+    public $result = [];
+
+    /**
      * Controller constructor.
      * @param $path
      * @param null $params
@@ -167,7 +172,7 @@ class Controller
     {
         if ($isAsset) {
             if ($isFonction) {
-                $this->_scriptsPaths[] = '/assets/js/functions/' . $path;
+                $this->_scriptsPaths[] = '/assets/js/function/' . $path;
             } else {
                 $this->_scriptsPaths[] = '/assets/js/' . $path;
             }

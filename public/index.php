@@ -57,6 +57,7 @@ $router->get('/blog/:id', ACL::EVERYONE);
  */
 $router->get('/login', ACL::NOT_LOGGED_IN);
 $router->get('/register', ACL::NOT_LOGGED_IN);
+$router->post('/register', ACL::NOT_LOGGED_IN);
 
 /**
  * Admin route
