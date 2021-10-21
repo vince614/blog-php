@@ -22,7 +22,7 @@ class Model
      * Name of entity
      * @var string
      */
-    protected $_entityName;
+    public $_entityName;
 
     /**
      * Filter collection

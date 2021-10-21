@@ -4,7 +4,9 @@ namespace App\Controllers;
 use App\App;
 use App\Entity\UserEntity;
 use App\Models\UserModel;
+use App_Core_Exception;
 use Core\Controllers\Controller;
+use Core\Utils\Ajax;
 use Core\Utils\Request;
 
 /**
@@ -21,12 +23,21 @@ class RegisterController extends Controller
      */
     protected $request;
 
+    /**
+     * @var UserModel
+     */
+    protected $userModel;
+
     public function __construct($path, $params = null)
     {
         $this->request = new Request();
+        $this->userModel = App::getModel('user');
         parent::__construct($path, $params);
     }
 
+    /**
+     * @throws App_Core_Exception
+     */
     public function beforeRender()
     {
         $this->checkPostRequest();
@@ -37,30 +48,35 @@ class RegisterController extends Controller
 
     /**
      * Check post request
+     * @throws App_Core_Exception
      */
     public function checkPostRequest()
     {
-        if ($this->request->isPost()) {
-            switch ($this->request->getPost('type')) {
-                case self::REGISTER_REQUEST_TYPE:
-                    /** @var UserModel $userModel */
-                    $userModel = App::getModel('user');
+        if (!$this->request->isPost()) return;
+        $ajaxObject = new Ajax($this->request->getPost());
+        switch ($ajaxObject->getRequestType()) {
+            case self::REGISTER_REQUEST_TYPE:
+                $datas = $ajaxObject->getRequestDatas();
+                /** @var UserEntity $user */
+                $user = $this->userModel->getEntity($this->userModel->_entityName, [
+                    'name'          => $datas['username'],
+                    'email'         => $datas['email'],
+                    'password'      => $datas['password'],
+                    'created_at'    => time()
+                ]);
 
-                    $datas = $this->request->getPost();
-                    $user = $userModel->getEntity('user', [
-                        'name'          => $datas['username'],
-                        'email'         => $datas['email'],
-                        'password'      => $datas['password'],
-                        'created_at'    => time()
-                    ]);
-                    $created = $userModel->create($user, $userModel->_tableName);
-                    $created ?
-                        $this->result['success'] = "Vous êtes bien inscrit !" :
-                        $this->result['error'] = "Une erreur c'est produite, veuillez réessayer";
-            }
-            echo json_encode($this->result);
-            exit;
+                // Check if email exist email
+                if ($this->userModel->load($user->getEmail(), 'email')) {
+                    $ajaxObject->error("Cet adresse mail est déjà relié à un compte, veuillez en choisir une autre");
+                    break;
+                }
+
+                $created = $this->userModel->create($user, $this->userModel->_tableName);
+                $created ?
+                    $ajaxObject->success("Vous êtes bien inscrit !") :
+                    $ajaxObject->error("Une erreur c'est produite, veuillez réessayer");
         }
+        $ajaxObject->sendResponse();
     }
 
 }

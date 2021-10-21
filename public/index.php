@@ -53,9 +53,10 @@ $router->get('/blog/:id', ACL::EVERYONE);
 
 /**
  * Unique blog route
- * @GET METHOD
+ * @GET @ @POST METHOD
  */
 $router->get('/login', ACL::NOT_LOGGED_IN);
+$router->post('/login', ACL::NOT_LOGGED_IN);
 $router->get('/register', ACL::NOT_LOGGED_IN);
 $router->post('/register', ACL::NOT_LOGGED_IN);
 

@@ -1,15 +1,15 @@
-class registerFrom {
+import Form from '/Core/Form/Form';
+class registerForm extends Form {
 
     /**
      * Contructor
      */
     constructor() {
-        this.passwordMinLength = 5;
+        super();
         this.usernameInput = $('#username');
         this.emailInput = $('#email');
         this.passwordInput = $('#password');
         this.comfirmPasswordInput = $('#comfirm-password');
-        this.error = null;
     }
 
     /**
@@ -23,49 +23,6 @@ class registerFrom {
     }
 
     /**
-     * Validate email
-     *
-     * @param email
-     * @return {boolean}
-     */
-    validateEmail(email) {
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let isValidate = re.test(String(email).toLowerCase());
-        if (isValidate) {
-            return true;
-        }
-        this.error = "Merci de rentrez un email valide.";
-        return false;
-    }
-
-    /**
-     * Validate password
-     *
-     * @param password
-     * @return {boolean}
-     */
-    validatePassword(password) {
-        if (password.length >= this.passwordMinLength) {
-            return true;
-        }
-        this.error = "Votre mot de passe dois contenir plus de " + this.passwordMinLength + " caractères.";
-        return false;
-    }
-
-    /**
-     * Check both passwords
-     *
-     * @return {boolean}
-     */
-    checkPasswords() {
-        if (this.password === this.comfirmPassword) {
-            return true;
-        }
-        this.error = "Vos mot de passes ne correspodent pas.";
-        return false;
-    }
-
-    /**
      * Send data request
      */
     send() {
@@ -74,8 +31,7 @@ class registerFrom {
             username: this.username,
             email: this.email,
             password: this.password
-        }).done(function (datas) {
-            let data = JSON.parse(datas);
+        }).done(function (data) {
             if (data.error) {
                 return alert(data.error);
             } else if(data.success) {
@@ -93,7 +49,7 @@ class registerFrom {
         this.getValues();
         return this.validateEmail(this.email) &
             this.validatePassword(this.password) &
-            this.checkPasswords();
+            this.checkPasswords(this.password, this.comfirmPassword);
     }
 
     /**
@@ -109,6 +65,6 @@ class registerFrom {
 
 const registerButton = $('#register-button');
 registerButton.click(function () {
-    let registerObject = new registerFrom();
+    let registerObject = new registerForm();
     registerObject.submit();
 });
