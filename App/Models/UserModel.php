@@ -55,4 +55,17 @@ class UserModel extends Model
         $this->request->unsetSession('user');
         return $this;
     }
+
+    /**
+     * Get user session
+     *
+     * @return bool|UserEntity
+     */
+    public function getUserSession()
+    {
+        if ($userSession = $this->request->getSession('user')) {
+            return $this->load($userSession['id']);
+        }
+        return false;
+    }
 }

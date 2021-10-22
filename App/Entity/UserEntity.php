@@ -84,11 +84,11 @@ class UserEntity extends Entity
     }
 
     /**
-     * @return int
+     * @return bool
      */
     public function getIsAdmin()
     {
-        return $this->is_admin;
+        return (bool) $this->is_admin;
     }
 
     /**

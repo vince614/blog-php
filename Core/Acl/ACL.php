@@ -63,7 +63,9 @@ class ACL
     protected function checkACL()
     {
         $userLvl = $this->getUserLvl();
-        if ($this->acl == self::EVERYONE) return true;
+        if ($this->acl == self::EVERYONE ||
+            $userLvl == self::ADMIN
+        ) return true;
         if (is_array($this->acl)) {
             foreach ($this->acl as $acl) {
                 if ($userLvl == $acl) return true;

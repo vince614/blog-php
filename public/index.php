@@ -61,6 +61,12 @@ $router->get('/register', ACL::NOT_LOGGED_IN);
 $router->post('/register', ACL::NOT_LOGGED_IN);
 
 /**
+ * Logout route
+ * @GET METHOD
+ */
+$router->get('/logout', [ACL::LOGGED_IN]);
+
+/**
  * Admin route
  * @GET METHOD
  */
