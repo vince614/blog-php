@@ -1,4 +1,4 @@
-import Form from '/Core/Form/Form';
+import Form from "../module/Form.js";
 class registerForm extends Form {
 
     /**
@@ -10,6 +10,18 @@ class registerForm extends Form {
         this.emailInput = $('#email');
         this.passwordInput = $('#password');
         this.comfirmPasswordInput = $('#comfirm-password');
+        this.submitButton = $('#register-button');
+    }
+
+    /**
+     * Trigger button
+     */
+    trigger() {
+        console.log(this.submitButton);
+        let self = this;
+        this.submitButton.click(function () {
+            self.submit();
+        });
     }
 
     /**
@@ -60,9 +72,7 @@ class registerForm extends Form {
             this.send() :
             alert(this.error); // @todo changer les alertes
     }
-
 }
-
 const registerButton = $('#register-button');
 registerButton.click(function () {
     let registerObject = new registerForm();

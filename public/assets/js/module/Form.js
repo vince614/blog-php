@@ -1,5 +1,4 @@
-class Form
-{
+export default class Form {
     constructor() {
         this.error = null;
         this.passwordMinLength = 5;
@@ -43,11 +42,8 @@ class Form
      * @return {boolean}
      */
     checkPasswords(password, comfirmPassword) {
-        if (password === comfirmPassword) {
-            return true;
-        }
+        if (password === comfirmPassword) return true;
         this.error = "Vos mot de passes ne correspodent pas.";
         return false;
     }
-
 }

@@ -18,6 +18,21 @@ class Controller
     const SCRIPTS_BLOCK = 'scripts';
 
     /**
+     * Path types
+     */
+    const ASSETS_PATH = "/assets/js/";
+    const FUNCTION_PATH = "/assets/js/function/";
+    const MODULE_PATH = "/assets/js/module/";
+    const ROOT_PATH = "/";
+
+    /**
+     * Js script types
+     */
+    const JAVASCRIPT_TYPE = "text/javascript";
+    const MODULE_TYPE = "module";
+
+
+    /**
      * Variables
      * @var $vars array
      */
@@ -48,7 +63,7 @@ class Controller
     /**
      * @var array
      */
-    protected $_scriptsPaths = [];
+    protected $_scripts = [];
 
     /**
      * @var array
@@ -163,22 +178,17 @@ class Controller
     /**
      * Set scripts path
      *
+     * @param $fileName
      * @param $path
-     * @param bool $isFonction
-     * @param bool $isAsset
+     * @param string $type
      * @return Controller
      */
-    public function setScriptPath($path, $isFonction = false, $isAsset = true)
+    public function setScript($fileName, $path, $type = self::JAVASCRIPT_TYPE)
     {
-        if ($isAsset) {
-            if ($isFonction) {
-                $this->_scriptsPaths[] = '/assets/js/function/' . $path;
-            } else {
-                $this->_scriptsPaths[] = '/assets/js/' . $path;
-            }
-        } else {
-            $this->_scriptsPaths[] = '/' . $path;
-        }
+        $this->_scripts[] = [
+            'path' => $path . $fileName,
+            'type' => $type
+        ];
         return $this;
     }
 
@@ -197,9 +207,9 @@ class Controller
      *
      * @return array
      */
-    public function getScriptsPaths()
+    public function getScripts()
     {
-        return $this->_scriptsPaths;
+        return $this->_scripts;
     }
 
 }

@@ -1,4 +1,4 @@
-import Form from '/Core/Form/Form';
+import Form from '../module/Form.js';
 class loginForm extends Form {
 
     /**
