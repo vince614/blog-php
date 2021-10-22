@@ -132,7 +132,7 @@ class Model
      *
      * @param $object
      * @param $tableName
-     * @return void
+     * @return bool
      */
     public function create($object, $tableName)
     {

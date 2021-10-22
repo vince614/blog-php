@@ -23,11 +23,6 @@ class PostEntity extends Entity
     /**
      * @var string
      */
-    private $resume;
-
-    /**
-     * @var string
-     */
     private $content;
 
     /**
@@ -86,14 +81,6 @@ class PostEntity extends Entity
     public function getIsPublic()
     {
         return (int) $this->is_public;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResume()
-    {
-        return $this->resume;
     }
 
     /**
@@ -185,16 +172,6 @@ class PostEntity extends Entity
     public function setIsPublic($is_public)
     {
         $this->is_public = $is_public;
-        return $this;
-    }
-
-    /**
-     * @param string $resume
-     * @return PostEntity
-     */
-    public function setResume($resume)
-    {
-        $this->resume = $resume;
         return $this;
     }
 

@@ -41,9 +41,10 @@ $router->get('/');
 
 /**
  * Blog list route
- * @GET METHOD
+ * @GET & @POST METHOD
  */
 $router->get('/blog');
+$router->post('/blog');
 
 /**
  * Unique blog route
