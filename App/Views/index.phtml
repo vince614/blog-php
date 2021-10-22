@@ -1,1 +1,48 @@
-Page d'acceuil
+<?php
+
+use App\App;
+
+?>
+<div style="background: url(https://bootstrapious.com/i/snippets/sn-static-header/background.jpg)" class="bg-cover text-white bg-opacity-75">
+    <div class="d-flex justify-content-center align-items-center flex-column container vh-50 text-center">
+        <h1 class="display-4 fw-bolder uppercase">Conception d'un blog en PHP</h1>
+        <p class="fst-italic mb-0 bg-dark-opacity rounded w-50">Projet OpenClassrooms qui consiste à développer un blog professionnel.</p>
+    </div>
+</div>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <h1 class="darky uppercase fw-bolder text-center p-5">Articles récents</h1>
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="post-preview">
+                <a href="<?= App::getHost() ?>/blog">
+                    <h2 class="fw-bolder darky fst-italic uppercase">Advice at the universe that is when mysterious crews view</h2>
+                </a>
+                <p class="post-meta">
+                    Posté par <a href="<?= App::getHost() ?>/profile">Vince</a> le 22 octobre, 2021
+                </p>
+            </div>
+            <hr class="my-4" />
+            <div class="post-preview">
+                <a href="<?= App::getHost() ?>/blog">
+                    <h2 class="fw-bolder darky fst-italic uppercase">Pressure at the universe that is when carnivorous phenomenans meet</h2>
+                </a>
+                <p class="post-meta">
+                    Posté par <a href="<?= App::getHost() ?>/profile">Vince</a> le 22 octobre, 2021
+                </p>
+            </div>
+            <hr class="my-4" />
+            <div class="post-preview">
+                <a href="<?= App::getHost() ?>/blog">
+                    <h2 class="fw-bolder darky fst-italic uppercase">This honor has only been experienced by a cold particle</h2>
+                </a>
+                <p class="post-meta">
+                    Posté par <a href="#!">Vince</a> le 20 octobre, 2021
+                </p>
+            </div>
+            <hr class="my-4" />
+            <div class="d-flex justify-content-end mb-4">
+                <a class="btn btn-primary text-uppercase" href="<?= App::getHost() ?>/blog">plus de posts →</a>
+            </div>
+        </div>
+    </div>
+</div>

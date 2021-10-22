@@ -12,8 +12,25 @@ class Controller
     /**
      * Blocks
      */
-    const HEADER_BLOCK = 'header';
-    const FOOTER_BLOCK = 'footer';
+    const HEADER_BLOCK  = 'header';
+    const NAVBAR_BLOCK  = 'navBar';
+    const FOOTER_BLOCK  = 'footer';
+    const SCRIPTS_BLOCK = 'scripts';
+
+    /**
+     * Path types
+     */
+    const ASSETS_PATH = "/assets/js/";
+    const FUNCTION_PATH = "/assets/js/function/";
+    const MODULE_PATH = "/assets/js/module/";
+    const ROOT_PATH = "/";
+
+    /**
+     * Js script types
+     */
+    const JAVASCRIPT_TYPE = "text/javascript";
+    const MODULE_TYPE = "module";
+
 
     /**
      * Variables
@@ -46,7 +63,12 @@ class Controller
     /**
      * @var array
      */
-    protected $_scriptsPaths = [];
+    protected $_scripts = [];
+
+    /**
+     * @var array
+     */
+    public $result = [];
 
     /**
      * Controller constructor.
@@ -76,7 +98,9 @@ class Controller
      */
     protected function beforeRender()
     {
+        $this->setStylesheetPath('theme.css');
         $this->setBlock(self::HEADER_BLOCK);
+        $this->setBlock(self::NAVBAR_BLOCK);
     }
 
     /**
@@ -85,6 +109,7 @@ class Controller
     protected function afterRender()
     {
         $this->setBlock(self::FOOTER_BLOCK);
+        $this->setBlock(self::SCRIPTS_BLOCK);
     }
 
     /**
@@ -96,7 +121,7 @@ class Controller
     public function setBlock($block)
     {
         $blockFile = ROOT . '/App/Views/Blocks/' . str_replace('.', '/', $block) . '.phtml';
-        if (file_exists($blockFile)) {
+        if (is_file($blockFile)) {
             require $blockFile;
         }
         return $this;
@@ -153,22 +178,17 @@ class Controller
     /**
      * Set scripts path
      *
+     * @param $fileName
      * @param $path
-     * @param bool $isFonction
-     * @param bool $isAsset
+     * @param string $type
      * @return Controller
      */
-    public function setScriptPath($path, $isFonction = false, $isAsset = true)
+    public function setScript($fileName, $path, $type = self::JAVASCRIPT_TYPE)
     {
-        if ($isAsset) {
-            if ($isFonction) {
-                $this->_scriptsPaths[] = '/assets/js/functions/' . $path;
-            } else {
-                $this->_scriptsPaths[] = '/assets/js/' . $path;
-            }
-        } else {
-            $this->_scriptsPaths[] = '/' . $path;
-        }
+        $this->_scripts[] = [
+            'path' => $path . $fileName,
+            'type' => $type
+        ];
         return $this;
     }
 
@@ -187,9 +207,9 @@ class Controller
      *
      * @return array
      */
-    public function getScriptsPaths()
+    public function getScripts()
     {
-        return $this->_scriptsPaths;
+        return $this->_scripts;
     }
 
 }

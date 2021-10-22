@@ -45,13 +45,13 @@ class ACL
     /**
      * Run ACL checker
      *
-     * @return ErrorController
+     * @return void
      */
     public function run()
     {
         $acces = $this->checkACL();
         if (!$acces) {
-            return new ErrorController('Errors.403');
+            App::redirect('/');
         }
     }
 
@@ -63,14 +63,16 @@ class ACL
     protected function checkACL()
     {
         $userLvl = $this->getUserLvl();
-        if ($this->acl == self::EVERYONE) return true;
+        if ($this->acl == self::EVERYONE ||
+            $userLvl == self::ADMIN
+        ) return true;
         if (is_array($this->acl)) {
             foreach ($this->acl as $acl) {
-                if ($userLvl >= $acl) return true;
+                if ($userLvl == $acl) return true;
             }
             return false;
         }
-        return $userLvl >= $this->acl;
+        return $userLvl == $this->acl;
     }
 
     /**

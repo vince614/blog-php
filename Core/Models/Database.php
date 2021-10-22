@@ -99,4 +99,36 @@ class Database
         return Database::isSuccess($req);
 
     }
+
+    /**
+     * Create object in database
+     *
+     * @param $table
+     * @param $params
+     * @return bool
+     */
+    public function create($table, $params)
+    {
+        $i = 0;
+        $array = [];
+        $paramsCount = count($params);
+        $valueFields = "";
+        $valueText = "";
+        foreach ($params as $field => $value) {
+            if ($field === "id") continue;
+            if ($paramsCount - 1 == $i) {
+                $valueFields .=  "$field ";
+                $valueText .= "? ";
+            } else {
+                $valueFields .=  "$field, ";
+                $valueText .= "?, ";
+            }
+            $array[] = $value;
+            $i++;
+        }
+        $sql = "INSERT INTO $table ($valueFields) VALUES ($valueText)";
+        $req = Database::getPDO()->prepare($sql);
+        $req->execute($array);
+        return Database::isSuccess($req);
+    }
 }

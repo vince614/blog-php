@@ -16,13 +16,13 @@ class Model
      * Name of table
      * @var string
      */
-    protected $_tableName;
+    public $_tableName;
 
     /**
      * Name of entity
      * @var string
      */
-    protected $_entityName;
+    public $_entityName;
 
     /**
      * Filter collection
@@ -123,18 +123,41 @@ class Model
      */
     public function save($object, $tableName)
     {
+        return $this->_database->updateMultiple($tableName, $this->getAllAttributesFromEntity($object));
+    }
+
+
+    /**
+     * Create new entity in database
+     *
+     * @param $object
+     * @param $tableName
+     * @return void
+     */
+    public function create($object, $tableName)
+    {
+        return $this->_database->create($tableName, $this->getAllAttributesFromEntity($object));
+    }
+
+    /**
+     * Get all attributes from entity
+     *
+     * @param $object
+     * @return array
+     */
+    public function getAllAttributesFromEntity($object)
+    {
         $attributes = $object->getAttributes();
+        $array = [];
         if ($attributes) {
-            $array = [];
             foreach ($attributes as $attribut) {
                 $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
                 if (is_callable([$object, $method])) {
                     $array[$attribut] = $object->$method();
                 }
             }
-            return $this->_database->updateMultiple($tableName, $array);
         }
-        App::throwException("Erreur lors de la sauvegarde, pas d'attributs trouvés..");
+        return $array;
     }
 
     /**

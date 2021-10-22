@@ -41,7 +41,7 @@ class Render
     {
         extract($this->vars);
         $viewFile = ROOT . '/App/Views/' . str_replace('.', '/', $this->view) . '.phtml';
-        return file_exists($viewFile) ?
+        return is_file($viewFile) ?
             require $viewFile :
             new ErrorController(self::ERROR_404_PATH);
     }

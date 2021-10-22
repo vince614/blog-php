@@ -128,10 +128,10 @@ final class App
      */
     public static function getModel($modelClass)
     {
-        $modelClass = ucfirst($modelClass) . "Model";
-        $className = "App\\Models\\" . $modelClass;
+        $_modelClass = ucfirst($modelClass) . "Model";
+        $className = "App\\Models\\" . $_modelClass;
         if (class_exists($className)) {
-            return new $className;
+            return new $className($modelClass);
         }
         return false;
     }
@@ -175,6 +175,18 @@ final class App
         return App::getConfig(Config::LOCAL_MODE_CONFIG_CODE) == 1 ?
             App::getConfig(Config::UNSECURE_URL_CONFIG_CODE) :
             App::getConfig(Config::SECURE_URL_CONFIG_CODE);
+    }
+
+    /**
+     * Redirect
+     *
+     * @param $url
+     * @param bool $isExternal
+     */
+    public static function redirect($url, $isExternal = false)
+    {
+        $location = $isExternal ? $url : App::getHost() . $url;
+        header('Location: ' . $location);
     }
 
 }

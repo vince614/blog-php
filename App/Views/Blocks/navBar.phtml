@@ -1,0 +1,68 @@
+<?php
+
+use App\App;
+use App\Models\UserModel;
+
+/** @var UserModel $userModel */
+$userModel = App::getModel('user');
+$userLogged = $userModel->getUserSession();
+?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-bs-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a class="navbar-brand mt-2 mt-lg-0" href="<?= App::getHost() ?>">
+                <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="15" alt="" loading="lazy"/>
+            </a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= App::getHost() ?>">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= App::getHost() ?>/blog">Blog</a>
+                </li>
+                <?php if ($userLogged && $userLogged->getIsAdmin()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= App::getHost() ?>/admin">Admin</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+
+            <?php if (!$userLogged): ?>
+            <a type="button" href="<?= App::getHost() ?>/login" class="btn btn-link px-3 me-2 text-uppercase fw-bolder text-decoration-none">
+                Se connecter
+            </a>
+            <a href="<?= App::getHost() ?>/register" class="btn btn-primary me-3">
+                Créer un compte
+            </a>
+            <?php else: ?>
+
+                <span class="text-white-50 px-2 text-capitalize">
+                    <?= $userLogged->getName() ?>
+                </span>
+
+                <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuLink"
+                   role="button" data-mdb-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="<?= App::getHost() ?>/public/assets/img/empty.png" class="rounded-circle" height="40" alt="empty" loading="lazy"/>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="<?= App::getHost() ?>/profile/<?= $userLogged->getId() ?>">Mon profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="<?= App::getHost() ?>/blog/new">Ecrire un blog</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="<?= App::getHost() ?>/logout">Se deconnecter</a>
+                    </li>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>

@@ -50,13 +50,22 @@ $router->get('/blog');
  * @GET METHOD
  */
 $router->get('/blog/:id', ACL::EVERYONE);
+$router->post('/blog/:id', ACL::LOGGED_IN);
 
 /**
  * Unique blog route
- * @GET METHOD
+ * @GET @ @POST METHOD
  */
 $router->get('/login', ACL::NOT_LOGGED_IN);
+$router->post('/login', ACL::NOT_LOGGED_IN);
 $router->get('/register', ACL::NOT_LOGGED_IN);
+$router->post('/register', ACL::NOT_LOGGED_IN);
+
+/**
+ * Logout route
+ * @GET METHOD
+ */
+$router->get('/logout', [ACL::LOGGED_IN]);
 
 /**
  * Admin route

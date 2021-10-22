@@ -38,7 +38,7 @@ class Request
      */
     public function isPost()
     {
-        return isset($_POST);
+        return isset($_POST) && !empty($_POST);
     }
 
     /**
@@ -87,7 +87,8 @@ class Request
     public function getSession($key = null)
     {
         if ($key) {
-            return isset($_SESSION[$key]) ?
+            return isset($_SESSION[$key]) &&
+            !empty($_SESSION[$key]) ?
                 $_SESSION[$key] :
                 false;
         }
