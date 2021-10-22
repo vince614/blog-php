@@ -177,4 +177,16 @@ final class App
             App::getConfig(Config::SECURE_URL_CONFIG_CODE);
     }
 
+    /**
+     * Redirect
+     *
+     * @param $url
+     * @param bool $isExternal
+     */
+    public static function redirect($url, $isExternal = false)
+    {
+        $location = $isExternal ? $url : App::getHost() . $url;
+        header('Location: ' . $location);
+    }
+
 }
