@@ -1,0 +1,21 @@
+<div class="container d-flex justify-content-center align-items-center flex-column p-5">
+    <h2 class="uppercase fw-bolder">Créer un article</h2>
+    <div class="form-horizontal d-flex justify-content-center flex-column w-100">
+        <div class="form-group my-2">
+            <label class="control-label col-sm-2" for="title">Title de l'article :</label>
+            <input type="text" class="form-control" id="title" placeholder="Entrez le titre de l'article" name="title" required>
+            <small class="form-text text-muted">Le titre seras utilisé pour l'URL de l'article</small>
+        </div>
+        <div class="form-group my-2">
+            <label class="control-label col-sm-2" for="content">Contenue de l'article :</label>
+            <textarea class="form-control" id="content" placeholder="Entrez le contenu de l'article" name="content" style="height:300px;" required></textarea>
+            <small class="form-text text-muted">Ecrivez le contenue de votre article</small>
+        </div>
+        <br/>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" id="send-post-button">Publier</button>
+            </div>
+        </div>
+    </div>
+</div>
