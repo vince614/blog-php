@@ -75,6 +75,10 @@ footer {
     color: #0d6efd;
 }
 
+.dropdown-toggle::after {
+    border: 0;
+}
+
 /*
     default color :  114, 137, 218 (rgb)
     light : 172, 176, 255

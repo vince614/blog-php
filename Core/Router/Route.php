@@ -66,6 +66,11 @@ class Route
         if (!preg_match($regex, $url, $matches)) {
             return false;
         }
+        // Get url param
+        if (isset(explode('/', $url)[2])) {
+            $key = explode('/', $url)[2];
+            $matches[$key] = true;
+        }
         array_shift($matches);
         $this->matches = $matches;
         return true;

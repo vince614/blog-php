@@ -41,9 +41,10 @@ $router->get('/');
 
 /**
  * Blog list route
- * @GET METHOD
+ * @GET & @POST METHOD
  */
 $router->get('/blog');
+$router->post('/blog');
 
 /**
  * Unique blog route
@@ -51,6 +52,7 @@ $router->get('/blog');
  */
 $router->get('/blog/:id', ACL::EVERYONE);
 $router->post('/blog/:id', ACL::LOGGED_IN);
+$router->get('/blog/:id/edit/', ACL::LOGGED_IN);
 
 /**
  * Unique blog route

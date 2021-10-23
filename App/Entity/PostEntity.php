@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use App\App;
+use App\Models\UserModel;
 use Core\Entity\Entity;
 
 /**
@@ -19,11 +21,6 @@ class PostEntity extends Entity
      * @var string
      */
     private $title;
-
-    /**
-     * @var string
-     */
-    private $resume;
 
     /**
      * @var string
@@ -91,14 +88,6 @@ class PostEntity extends Entity
     /**
      * @return string
      */
-    public function getResume()
-    {
-        return $this->resume;
-    }
-
-    /**
-     * @return string
-     */
     public function getTitle()
     {
         return $this->title;
@@ -121,11 +110,27 @@ class PostEntity extends Entity
     }
 
     /**
+     * @param bool $length
      * @return string
      */
-    public function getContent()
+    public function getContent($length = false)
     {
+        if ($length && $length < strlen($this->content)) {
+            return substr($this->content, 0, $length) . '...';
+        }
         return $this->content;
+    }
+
+    /**
+     * Get author
+     *
+     * @return bool|UserEntity
+     */
+    public function getAuthor()
+    {
+        /** @var UserModel $userModel */
+        $userModel = App::getModel('user');
+        return $userModel->load($this->getAuthorId());
     }
 
     /**
@@ -185,16 +190,6 @@ class PostEntity extends Entity
     public function setIsPublic($is_public)
     {
         $this->is_public = $is_public;
-        return $this;
-    }
-
-    /**
-     * @param string $resume
-     * @return PostEntity
-     */
-    public function setResume($resume)
-    {
-        $this->resume = $resume;
         return $this;
     }
 
