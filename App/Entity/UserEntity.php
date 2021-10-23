@@ -1,6 +1,9 @@
 <?php
 namespace App\Entity;
 
+use App\App;
+use App\Models\PostModel;
+use App\Models\UserModel;
 use Core\Entity\Entity;
 
 /**
@@ -89,6 +92,20 @@ class UserEntity extends Entity
     public function getIsAdmin()
     {
         return (bool) $this->is_admin;
+    }
+
+    /**
+     * Get all articles from user
+     *
+     * @return PostEntity[]
+     */
+    public function getArticles()
+    {
+        /** @var PostModel $postModel */
+        $postModel = App::getModel('post');
+        return $postModel
+            ->addAttributToFilter('author_id', $this->getId())
+            ->getCollection();
     }
 
     /**

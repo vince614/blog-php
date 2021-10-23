@@ -7,7 +7,7 @@ use App\Models\UserModel;
 $userModel = App::getModel('user');
 $userLogged = $userModel->getUserSession();
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark position-fixed top-0 w-100 mb-5">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-bs-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
@@ -43,13 +43,13 @@ $userLogged = $userModel->getUserSession();
             </a>
             <?php else: ?>
 
-                <span class="text-white-50 px-2 text-capitalize">
+                <span class="text-white-50 px-2 uppercase fw-bolder">
                     <?= $userLogged->getName() ?>
                 </span>
 
                 <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuLink"
                    role="button" data-mdb-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= App::getHost() ?>/public/assets/img/empty.png" class="rounded-circle" height="40" alt="empty" loading="lazy"/>
+                    <img src="<?= App::getHost() ?>/public/assets/img/empty.png" class="rounded-circle" style="border: 3px solid rgba(255, 255, 255, .5)" height="40" alt="empty" loading="lazy"/>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
                     <li>

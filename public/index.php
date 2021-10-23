@@ -64,6 +64,12 @@ $router->get('/register', ACL::NOT_LOGGED_IN);
 $router->post('/register', ACL::NOT_LOGGED_IN);
 
 /**
+ * Profile route
+ * @GET METHOD
+ */
+$router->get('/profile/:id', ACL::EVERYONE);
+
+/**
  * Logout route
  * @GET METHOD
  */

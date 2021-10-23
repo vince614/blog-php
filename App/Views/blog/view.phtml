@@ -13,7 +13,7 @@ $article = $blogController->article;
 $userModel = App::getModel('user');
 $userLogged = $userModel->getUserSession();
 ?>
-<div class="container p-5">
+<div class="container p-5 d-flex vh-90 flex-column justify-content-center my-5">
     <div class="post-preview">
         <h2 class="fw-bolder darky fst-italic uppercase">
             <?= $article->getTitle() ?>

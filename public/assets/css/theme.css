@@ -65,7 +65,11 @@ footer {
 }
 
 .vh-50 {
-    height: 50vh !important;
+    min-height: 50vh !important;
+}
+
+.vh-90 {
+    min-height: 90vh !important;
 }
 
 .post-preview h2 {

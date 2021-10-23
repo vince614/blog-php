@@ -129,7 +129,7 @@ class BlogController extends Controller
         switch ($ajaxObject->getRequestType()) {
             case self::NEW_POST_REQUEST_TYPE:
                 $datas = $ajaxObject->getRequestDatas();
-                if ($datas['editMode']) {
+                if ($datas['editMode'] == "true") {
                     // Load article
                     /** @var PostEntity $article */
                     $article = $this->postModel->load($datas['urlKey'], 'url_key');
