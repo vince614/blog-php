@@ -31,6 +31,16 @@ class Model
     protected $_filter = [];
 
     /**
+     * @var null
+     */
+    protected $limit = null;
+
+    /**
+     * @var null
+     */
+    protected $orderBy = null;
+
+    /**
      * Database model
      * @var Database
      */
@@ -68,7 +78,10 @@ class Model
     {
         $result = [];
         $where = $this->_getWhereClause();
-        $req = $this->_database->pdo->prepare("SELECT * FROM $this->_tableName $where");
+        $sql = "SELECT * FROM $this->_tableName $where";
+        if ($this->orderBy) $sql .= "ORDER BY " . $this->orderBy['column'] . ' ' . $this->orderBy['sort'];
+        if ($this->limit) $sql .= " LIMIT " . $this->limit;
+        $req = $this->_database->pdo->prepare($sql);
         $req->execute();
         if ($this->_database->isSuccess($req)) {
             foreach ($req->fetchAll() as $datas) {
@@ -90,6 +103,34 @@ class Model
     public function addAttributToFilter($attribut, $value)
     {
         $this->_filter[$attribut] = $value;
+        return $this;
+    }
+
+    /**
+     * Set limit
+     *
+     * @param $limit
+     * @return $this
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * Set order by
+     *
+     * @param $column
+     * @param $sort
+     * @return $this
+     */
+    public function setOrderBy($column, $sort)
+    {
+        $this->orderBy = [
+            'column'    => $column,
+            'sort'      => $sort
+        ];
         return $this;
     }
 

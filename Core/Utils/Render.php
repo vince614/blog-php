@@ -25,10 +25,13 @@ class Render
      */
     protected $vars;
 
-    public function __construct($view, $vars)
+    public $class;
+
+    public function __construct($view, $vars, $class)
     {
         $this->view = $view;
         $this->vars = $vars;
+        $this->class = $class;
         $this->render();
     }
 

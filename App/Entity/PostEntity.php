@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use App\App;
+use App\Models\UserModel;
 use Core\Entity\Entity;
 
 /**
@@ -108,11 +110,27 @@ class PostEntity extends Entity
     }
 
     /**
+     * @param bool $length
      * @return string
      */
-    public function getContent()
+    public function getContent($length = false)
     {
-        return $this->content;
+        if ($length && $length < strlen($this->content)) {
+            return nl2br(substr($this->content, 0, $length) . '...');
+        }
+        return nl2br($this->content);
+    }
+
+    /**
+     * Get author
+     *
+     * @return bool|UserEntity
+     */
+    public function getAuthor()
+    {
+        /** @var UserModel $userModel */
+        $userModel = App::getModel('user');
+        return $userModel->load($this->getAuthorId());
     }
 
     /**

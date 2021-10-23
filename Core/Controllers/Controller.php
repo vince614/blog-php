@@ -89,7 +89,7 @@ class Controller
     {
         if (!isset($this->path)) new ErrorController(Render::ERROR_404_PATH);
         $this->beforeRender();
-        new Render($this->path, $this->vars);
+        new Render($this->path, $this->vars, $this);
         $this->afterRender();
     }
 
