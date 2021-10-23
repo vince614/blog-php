@@ -28,7 +28,8 @@ class postForm extends Form {
             type: 'create',
             title: this.title,
             urlKey: this.urlKey,
-            content: this.content
+            content: this.content,
+            editMode: editMode
         }).done(function (data) {
             if (data.error) {
                 return alert(data.error);

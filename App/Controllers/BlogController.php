@@ -17,8 +17,9 @@ use Core\Utils\Request;
 class BlogController extends Controller
 {
 
-    const ADD_NEW_POST_ROUTE = "new";
-    const NEW_POST_REQUEST_TYPE = "create";
+    const ADD_NEW_POST_ROUTE        = "new";
+    const NEW_POST_REQUEST_TYPE     = "create";
+    const DELETE_POST_REQUEST_TYPE  = "delete";
 
     /**
      * @var Request
@@ -56,6 +57,11 @@ class BlogController extends Controller
     public $articleForm = false;
 
     /**
+     * @var bool
+     */
+    public $editMode = false;
+
+    /**
      * BlogController constructor.
      *
      * @param $path
@@ -64,9 +70,12 @@ class BlogController extends Controller
     public function __construct($path, $params = null)
     {
         if ($params) {
-            if ($params[0] === self::ADD_NEW_POST_ROUTE) {
+            if ($params[0] === self::ADD_NEW_POST_ROUTE ||
+                isset($params['edit'])) {
                 $path .= '.new';
                 $this->articleForm = true;
+                $this->editMode = isset($params['edit']);
+                $this->articleUrlKey = $params[0];
             } else {
                 $path .= '.view';
                 $this->articleUrlKey = $params[0];
@@ -88,8 +97,12 @@ class BlogController extends Controller
 
         if ($this->articleForm) {
             $this->setScript('post.js', Controller::FUNCTION_PATH, Controller::MODULE_TYPE);
+            if ($this->editMode) {
+                $this->article = $this->postModel->load($this->articleUrlKey, 'url_key');
+            }
         } else if ($this->articleUrlKey) {
             $this->article = $this->postModel->load($this->articleUrlKey, 'url_key');
+            $this->setScript('post.js', Controller::ASSETS_PATH, Controller::JAVASCRIPT_TYPE);
         } else {
             $this->articles = $this->postModel->getCollection();
         }
@@ -105,31 +118,62 @@ class BlogController extends Controller
     {
         if (!$this->request->isPost()) return;
         $ajaxObject = new Ajax($this->request->getPost());
+
+        // Check if user is logged
+        $userSession = $this->userModel->getUserSession();
+        if (!$userSession) {
+            $ajaxObject->error("Vous devez être connecté pour publier un article");
+            $ajaxObject->sendResponse();
+        }
+
         switch ($ajaxObject->getRequestType()) {
             case self::NEW_POST_REQUEST_TYPE:
                 $datas = $ajaxObject->getRequestDatas();
+                if ($datas['editMode']) {
+                    // Load article
+                    /** @var PostEntity $article */
+                    $article = $this->postModel->load($datas['urlKey'], 'url_key');
 
-                // Get user session
-                $userSession = $this->userModel->getUserSession();
-                if (!$userSession) {
-                    $ajaxObject->error("Vous devez être connecté pour publier un article");
+                    // Check if is author
+                    if ($article->getAuthorId() !== $userSession->getId()) {
+                        $ajaxObject->error("Vous n'avez pas les permissions d'éditer cet article");
+                        break;
+                    }
+
+                    $article
+                        ->setTitle($datas['title'])
+                        ->setUrlKey($datas['urlKey'])
+                        ->setContent(htmlspecialchars($datas['content']))
+                        ->setUpdatedAt(time());
+                    $article->save();
+                    $ajaxObject->success("Votre article à bien été miss à jour !");
+                } else {
+                    $article = $this->postModel->getEntity($this->postModel->_entityName, [
+                        'title'         => $datas['title'],
+                        'url_key'       => $datas['urlKey'],
+                        'content'       => htmlspecialchars($datas['content']),
+                        'author_id'     => $userSession->getId(),
+                        'updated_at'    => time(),
+                        'created_at'    => time()
+                    ]);
+                    $created = $this->postModel->create($article, $this->postModel->_tableName);
+                    $created ?
+                        $ajaxObject->success("Votre article à bien été publier !") :
+                        $ajaxObject->error("Une erreur c'est produite, veuillez réessayer");
+                }
+                break;
+            case self::DELETE_POST_REQUEST_TYPE:
+                $datas = $ajaxObject->getRequestDatas();
+                /** Load article @var PostEntity $article */
+                $article = $this->postModel->load($datas['articleId']);
+
+                // Check if is author
+                if ($article->getAuthorId() !== $userSession->getId()) {
+                    $ajaxObject->error("Vous n'avez pas les permissions de supprimer cet article");
                     break;
                 }
-
-                /** @var PostModel $article */
-                $article = $this->postModel->getEntity($this->postModel->_entityName, [
-                    'title'         => $datas['title'],
-                    'url_key'       => $datas['urlKey'],
-                    'content'       => htmlspecialchars($datas['content']),
-                    'author_id'     => $userSession->getId(),
-                    'updated_at'    => time(),
-                    'created_at'    => time()
-                ]);
-
-                $created = $this->postModel->create($article, $this->postModel->_tableName);
-                $created ?
-                    $ajaxObject->success("Votre article à bien été publier !") :
-                    $ajaxObject->error("Une erreur c'est produite, veuillez réessayer");
+                $article->delete();
+                $ajaxObject->error("L'article à bien été supprimer");
         }
         $ajaxObject->sendResponse();
     }

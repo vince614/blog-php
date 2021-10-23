@@ -1,19 +1,34 @@
+<?php
+
+use App\Controllers\BlogController;
+
+/** @var BlogController $blogController */
+$blogController = $this->class;
+$article = $blogController->article;
+
+?>
 <div class="container d-flex justify-content-center align-items-center flex-column p-5">
-    <h2 class="uppercase fw-bolder">Créer un article</h2>
+    <?php if ($blogController->editMode): ?>
+        <h2 class="uppercase fw-bolder">Modifier votre article</h2>
+    <?php else: ?>
+        <h2 class="uppercase fw-bolder">Créer un article</h2>
+    <?php endif; ?>
     <div class="form-horizontal d-flex justify-content-center flex-column w-100">
         <div class="form-group my-2">
             <label class="control-label col-sm-2" for="title">Title de l'article :</label>
-            <input type="text" class="form-control" id="title" placeholder="Entrez le titre de l'article" name="title" required>
+            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getTitle() ?>" <? endif; ?>
+                type="text" class="form-control" id="title" placeholder="Entrez le titre de l'article" name="title" required>
         </div>
         <div class="form-group my-2">
             <label class="control-label col-sm-2" for="url-key">Clé d'URL :</label>
-            <input type="text" class="form-control" id="url-key" placeholder="Entrez la clé URL" name="url-key" required>
+            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getUrlKey() ?>" <? endif; ?>
+                type="text" class="form-control" id="url-key" placeholder="Entrez la clé URL" name="url-key" required>
             <small class="form-text text-muted">La clé d'URL correspond au chemin URL de l'article</small><br/>
             <small class="form-text text-muted">Vous ne pouvez utiliser que des lettres en minuscules, numéro et tiret (-)</small>
         </div>
         <div class="form-group my-2">
             <label class="control-label col-sm-2" for="content">Contenue de l'article :</label>
-            <textarea class="form-control" id="content" placeholder="Entrez le contenu de l'article" name="content" style="height:300px;" required></textarea>
+            <textarea class="form-control" id="content" placeholder="Entrez le contenu de l'article" name="content" style="height:300px;" required><?php if ($article = $blogController->article) echo $article->getContent(false, false) ?></textarea>
             <small class="form-text text-muted">Ecrivez le contenue de votre article</small>
         </div>
         <br/>
@@ -24,3 +39,6 @@
         </div>
     </div>
 </div>
+<script>
+    let editMode = <?= $blogController->editMode ?>;
+</script>

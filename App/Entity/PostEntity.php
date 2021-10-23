@@ -116,9 +116,9 @@ class PostEntity extends Entity
     public function getContent($length = false)
     {
         if ($length && $length < strlen($this->content)) {
-            return nl2br(substr($this->content, 0, $length) . '...');
+            return substr($this->content, 0, $length) . '...';
         }
-        return nl2br($this->content);
+        return $this->content;
     }
 
     /**
