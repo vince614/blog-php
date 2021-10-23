@@ -40,5 +40,5 @@ $article = $blogController->article;
     </div>
 </div>
 <script>
-    let editMode = <?= $blogController->editMode ?>;
+    let editMode = <?= $blogController->editMode ? "true" : "false" ?>;
 </script>
