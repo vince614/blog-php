@@ -47,6 +47,7 @@ class ProfileController extends Controller
         if ($user) {
             $this->user = $user;
             $this->setStylesheetPath('profile.css');
+            $this->meta->setTitle($this->user->getName());
             parent::beforeRender();
         } else {
             App::redirect('/');
