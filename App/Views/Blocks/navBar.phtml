@@ -7,14 +7,14 @@ use App\Models\UserModel;
 $userModel = App::getModel('user');
 $userLogged = $userModel->getUserSession();
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark position-fixed top-0 w-100 mb-5">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark position-fixed top-0 w-100 mb-5" style="z-index: 10;">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-bs-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <a class="navbar-brand mt-2 mt-lg-0" href="<?= App::getHost() ?>">
-                <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="15" alt="" loading="lazy"/>
+                <img src="<?= App::getHost() ?>/public/assets/img/logo.png" height="50" alt="logo" loading="lazy"/>
             </a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">

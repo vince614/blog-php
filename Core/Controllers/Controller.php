@@ -1,6 +1,7 @@
 <?php
 namespace Core\Controllers;
 
+use Core\Utils\Meta;
 use Core\Utils\Render;
 
 /**
@@ -71,6 +72,11 @@ class Controller
     public $result = [];
 
     /**
+     * @var Meta
+     */
+    public $meta;
+
+    /**
      * Controller constructor.
      * @param $path
      * @param null $params
@@ -79,6 +85,7 @@ class Controller
     {
         $this->path = $path;
         $this->params = $params;
+        $this->meta = new Meta();
         $this->index();
     }
 
