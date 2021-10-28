@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\App;
+use App\Models\CommentModel;
 use App\Models\UserModel;
 use Core\Entity\Entity;
 
@@ -234,6 +235,21 @@ class PostEntity extends Entity
     public function getResume()
     {
         return $this->resume;
+    }
+
+    /**
+     * Get comments collection of post
+     *
+     * @return CommentEntity[]
+     */
+    public function getComments()
+    {
+        /** @var CommentModel $commentModel */
+        $commentModel = App::getModel('comment');
+        return $commentModel
+            ->addAttributToFilter('post_id', $this->getId())
+            ->addAttributToFilter('is_verified', "1")
+            ->getCollection();
     }
 
 }

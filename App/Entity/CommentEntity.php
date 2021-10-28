@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use App\App;
+use App\Models\UserModel;
 use Core\Entity\Entity;
 
 /**
@@ -147,6 +149,18 @@ class CommentEntity extends Entity
     {
         $this->post_id = $post_id;
         return $this;
+    }
+
+    /**
+     * Get authore of comment
+     *
+     * @return bool|UserEntity
+     */
+    public function getAuthor()
+    {
+        /** @var UserModel $userModel */
+        $userModel = App::getModel('user');
+        return $userModel->load($this->getAuthorId());
     }
 
 }
