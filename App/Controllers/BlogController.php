@@ -165,6 +165,7 @@ class BlogController extends Controller
 
                     $article
                         ->setTitle($datas['title'])
+                        ->setResume($datas['resume'])
                         ->setContent(htmlspecialchars($datas['content']))
                         ->setUpdatedAt(time());
                     $article->save();

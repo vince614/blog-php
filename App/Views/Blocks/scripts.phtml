@@ -10,4 +10,19 @@ foreach ($this->getScripts() as $script): ?>
 <?php endforeach; ?>
 <script>
     const HOST_URL = "<?= App::getHost() ?>";
+
+    /**
+     * Success alert
+     *
+     * @param msg
+     * @param redirect
+     */
+    function success(msg, redirect = null) {
+        if (confirm(msg)) {
+            if (redirect) {
+                window.location.href = HOST_URL + redirect;
+            }
+        }
+    }
+
 </script>
