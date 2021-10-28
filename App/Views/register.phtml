@@ -55,6 +55,7 @@ use App\App;
                                             J'accepte les <a href="<?= App::getHost() ?>/tos">conditions d'utilisations</a>
                                         </label>
                                     </div>
+                                    <input type="text" id="form-token" value="<?= App::registry('token_register') ?>" style="display: none;"/>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button id="register-button" type="button" class="btn btn-primary btn-lg">S'inscrire</button>
                                     </div>

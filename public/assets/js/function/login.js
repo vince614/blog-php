@@ -8,6 +8,7 @@ class loginForm extends Form {
         super();
         this.emailInput = $('#email');
         this.passwordInput = $('#password');
+        this.formTokenInput = $('#form-token');
     }
 
     /**
@@ -16,6 +17,7 @@ class loginForm extends Form {
     getValues() {
         this.email = this.emailInput.val();
         this.password = this.passwordInput.val();
+        this.formToken = this.formTokenInput.val();
     }
 
     /**
@@ -25,7 +27,8 @@ class loginForm extends Form {
         $.post(HOST_URL + '/login', {
             type: 'login',
             email: this.email,
-            password: this.password
+            password: this.password,
+            formToken: this.formToken
         }).done(function (data) {
             if (data.error) {
                 return alert(data.error);

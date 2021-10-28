@@ -28,6 +28,7 @@ use App\App;
                                             <input type="password" id="password" class="form-control" required/>
                                         </div>
                                     </div>
+                                    <input type="text" id="form-token" value="<?= App::registry('token_login') ?>" style="display: none;"/>
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button id="login-button" type="button" class="btn btn-primary btn-lg">Se connecter</button>
                                     </div>
