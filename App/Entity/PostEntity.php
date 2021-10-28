@@ -25,6 +25,11 @@ class PostEntity extends Entity
     /**
      * @var string
      */
+    private $resume;
+
+    /**
+     * @var string
+     */
     private $content;
 
     /**
@@ -211,6 +216,24 @@ class PostEntity extends Entity
     {
         $this->updated_at = $updated_at;
         return $this;
+    }
+
+    /**
+     * @param string $resume
+     * @return PostEntity
+     */
+    public function setResume($resume)
+    {
+        $this->resume = $resume;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResume()
+    {
+        return $this->resume;
     }
 
 }

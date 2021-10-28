@@ -16,6 +16,7 @@ class FormValidation
      */
     const TOKEN_LENGTH = 50;
     const PASSWORD_MIN_LENGTH = 5;
+    const RESUME_MAX_LENGTH = 300;
 
     /**
      * @var string
@@ -159,6 +160,21 @@ class FormValidation
             return $this;
         }
         $this->error = "Vos mot de passes ne correspodent pas.";
+        return $this;
+    }
+
+    /**
+     * Check resume
+     *
+     * @param $resume
+     * @return $this
+     */
+    public function checkResume($resume)
+    {
+        if (strlen($resume) < self::RESUME_MAX_LENGTH) {
+            return $this;
+        }
+        $this->error = "Votre résumé dois contenir moins de " . self::PASSWORD_MIN_LENGTH . " caractères.";
         return $this;
     }
 

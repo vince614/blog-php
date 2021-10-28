@@ -7,6 +7,7 @@ use App\Models\PostModel;
 use App\Models\UserModel;
 use App_Core_Exception;
 use Core\Controllers\Controller;
+use Core\Form\FormValidation;
 use Core\Utils\Ajax;
 use Core\Utils\Request;
 
@@ -62,6 +63,11 @@ class BlogController extends Controller
     public $editMode = false;
 
     /**
+     * @var FormValidation
+     */
+    protected $formValidation;
+
+    /**
      * BlogController constructor.
      *
      * @param $path
@@ -84,6 +90,7 @@ class BlogController extends Controller
         $this->request = new Request();
         $this->postModel = App::getModel('post');
         $this->userModel = App::getModel('user');
+        $this->formValidation = new FormValidation();
         parent::__construct($path, $params);
     }
 
@@ -98,6 +105,10 @@ class BlogController extends Controller
         if ($this->articleForm) {
             $this->setScript('post.js', Controller::FUNCTION_PATH, Controller::MODULE_TYPE);
             $this->meta->setTitle("Création d'un article");
+            $this->formValidation
+                ->generateToken()
+                ->saveTokenInSession('blog')
+                ->saveTokenInApp('blog');
             if ($this->editMode) {
                 $this->article = $this->postModel->load($this->articleUrlKey, 'url_key');
                 $this->meta->setTitle("Modification d'un article");
@@ -133,6 +144,14 @@ class BlogController extends Controller
         switch ($ajaxObject->getRequestType()) {
             case self::NEW_POST_REQUEST_TYPE:
                 $datas = $ajaxObject->getRequestDatas();
+
+                // Validate form
+                $this->validateForm($datas);
+                if ($error = $this->formValidation->getError()) {
+                    $ajaxObject->error($error);
+                    $ajaxObject->sendResponse();
+                }
+
                 if ($datas['editMode'] == "true") {
                     // Load article
                     /** @var PostEntity $article */
@@ -146,15 +165,22 @@ class BlogController extends Controller
 
                     $article
                         ->setTitle($datas['title'])
-                        ->setUrlKey($datas['urlKey'])
                         ->setContent(htmlspecialchars($datas['content']))
                         ->setUpdatedAt(time());
                     $article->save();
                     $ajaxObject->success("Votre article à bien été miss à jour !");
                 } else {
+
+                    // Check if url key is already use
+                    if ($this->postModel->load($datas['urlKey'], 'url_key')) {
+                        $ajaxObject->error("Cette clé d'url est déjà utilisez, veuillez en choisir une autre");
+                        $ajaxObject->sendResponse();
+                    }
+
                     $article = $this->postModel->getEntity($this->postModel->_entityName, [
                         'title'         => $datas['title'],
                         'url_key'       => $datas['urlKey'],
+                        'resume'        => $datas['resume'],
                         'content'       => htmlspecialchars($datas['content']),
                         'author_id'     => $userSession->getId(),
                         'updated_at'    => time(),
@@ -180,6 +206,18 @@ class BlogController extends Controller
                 $ajaxObject->error("L'article à bien été supprimer");
         }
         $ajaxObject->sendResponse();
+    }
+
+    /**
+     * Validate form
+     *
+     * @param $datas
+     */
+    public function validateForm($datas)
+    {
+        $this->formValidation
+            ->verifyFormToken('blog', $datas['formToken'])
+            ->checkResume($datas['resume']);
     }
 
 }

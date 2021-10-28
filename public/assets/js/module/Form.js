@@ -2,6 +2,7 @@ export default class Form {
     constructor() {
         this.error = null;
         this.passwordMinLength = 5;
+        this.resumeMaxLength = 300;
     }
 
     /**
@@ -44,6 +45,19 @@ export default class Form {
     checkPasswords(password, comfirmPassword) {
         if (password === comfirmPassword) return true;
         this.error = "Vos mot de passes ne correspodent pas.";
+        return false;
+    }
+
+    /**
+     *
+     * @param text
+     * @return {boolean}
+     */
+    checkLenght(text) {
+        if (text.length < this.resumeMaxLength) {
+            return true;
+        }
+        this.error = "Votre résumé dois contenir moins de " + this.resumeMaxLength + " caractères.";
         return false;
     }
 }
