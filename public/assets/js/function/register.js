@@ -11,6 +11,7 @@ class registerForm extends Form {
         this.passwordInput = $('#password');
         this.comfirmPasswordInput = $('#comfirm-password');
         this.submitButton = $('#register-button');
+        this.formTokenInput = $('#form-token');
     }
 
     /**
@@ -32,6 +33,7 @@ class registerForm extends Form {
         this.email = this.emailInput.val();
         this.password = this.passwordInput.val();
         this.comfirmPassword = this.comfirmPasswordInput.val();
+        this.formToken = this.formTokenInput.val();
     }
 
     /**
@@ -42,7 +44,8 @@ class registerForm extends Form {
             type: 'register',
             username: this.username,
             email: this.email,
-            password: this.password
+            password: this.password,
+            formToken: this.formToken
         }).done(function (data) {
             if (data.error) {
                 return alert(data.error);
