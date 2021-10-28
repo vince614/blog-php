@@ -49,8 +49,8 @@ class registerForm extends Form {
         }).done(function (data) {
             if (data.error) {
                 return alert(data.error);
-            } else if(data.success) {
-                return alert(data.success);
+            } else if (data.success) {
+                return success(data.success, '/login');
             }
         });
     }

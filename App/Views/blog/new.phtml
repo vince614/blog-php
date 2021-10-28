@@ -1,5 +1,6 @@
 <?php
 
+use App\App;
 use App\Controllers\BlogController;
 
 /** @var BlogController $blogController */
@@ -19,12 +20,21 @@ $article = $blogController->article;
             <input <?php if ($article = $blogController->article): ?> value="<?= $article->getTitle() ?>" <? endif; ?>
                 type="text" class="form-control" id="title" placeholder="Entrez le titre de l'article" name="title" required>
         </div>
+        <?php if ($article = $blogController->article): ?>
+            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getUrlKey() ?>" style="display: none;" <? endif; ?>
+                    type="text" class="form-control" id="url-key" name="url-key" required>
+        <?php else: ?>
+            <div class="form-group my-2">
+                <label class="control-label col-sm-2" for="url-key">Clé d'URL :</label>
+                <input type="text" class="form-control" id="url-key" placeholder="Entrez la clé URL" name="url-key" required>
+                <small class="form-text text-muted">La clé d'URL correspond au chemin URL de l'article</small><br/>
+                <small class="form-text text-muted">Vous ne pouvez utiliser que des lettres en minuscules, numéro et tiret (-)</small>
+            </div>
+        <?php endif; ?>
         <div class="form-group my-2">
-            <label class="control-label col-sm-2" for="url-key">Clé d'URL :</label>
-            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getUrlKey() ?>" <? endif; ?>
-                type="text" class="form-control" id="url-key" placeholder="Entrez la clé URL" name="url-key" required>
-            <small class="form-text text-muted">La clé d'URL correspond au chemin URL de l'article</small><br/>
-            <small class="form-text text-muted">Vous ne pouvez utiliser que des lettres en minuscules, numéro et tiret (-)</small>
+            <label class="control-label col-sm-2" for="resume">Résumé de l'article :</label>
+            <textarea class="form-control" id="resume" placeholder="Entrez le résumé de l'article" name="resume" style="height:100px;" required><?php if ($article = $blogController->article) echo $article->getResume() ?></textarea>
+            <small class="form-text text-muted">Vous pouvez utiliser au maximum 300 caractères</small>
         </div>
         <div class="form-group my-2">
             <label class="control-label col-sm-2" for="content">Contenue de l'article :</label>
@@ -32,6 +42,7 @@ $article = $blogController->article;
             <small class="form-text text-muted">Ecrivez le contenue de votre article</small>
         </div>
         <br/>
+        <input type="text" id="form-token" value="<?= App::registry('token_blog') ?>" style="display: none;"/>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary" id="send-post-button">Publier</button>

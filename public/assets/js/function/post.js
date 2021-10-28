@@ -9,6 +9,8 @@ class postForm extends Form {
         this.titleInput = $('#title');
         this.urlKeyInput = $('#url-key');
         this.contentInput = $('#content');
+        this.resumeInput = $('#resume');
+        this.formTokenInput = $('#form-token');
     }
 
     /**
@@ -18,6 +20,8 @@ class postForm extends Form {
         this.title = this.titleInput.val();
         this.urlKey = this.urlKeyInput.val();
         this.content = this.contentInput.val();
+        this.resume = this.resumeInput.val();
+        this.formToken = this.formTokenInput.val();
     }
 
     /**
@@ -29,12 +33,14 @@ class postForm extends Form {
             title: this.title,
             urlKey: this.urlKey,
             content: this.content,
-            editMode: editMode
+            resume: this.resume,
+            editMode: editMode,
+            formToken: this.formToken
         }).done(function (data) {
             if (data.error) {
                 return alert(data.error);
-            } else if(data.success) {
-                return alert(data.success);
+            } else if (data.success) {
+                return success(data.success, '/blog');
             }
         });
     }
@@ -48,7 +54,8 @@ class postForm extends Form {
         this.getValues();
         return this.content &&
             this.urlKey &&
-            this.title; // @todo Ajouter des conditions pour vérifié le formulaire
+            this.title
+            && this.checkLenght(this.resume);
     }
 
     /**
