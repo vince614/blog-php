@@ -37,8 +37,8 @@ $profileController = $this->class;
                             </div>
                             <div class="col-4">
                                 <div class="mt-3">
-                                    <h4 class="uppercase fw-bolder"><?= $profileController->user->getIsAdmin() ? 'Oui' : 'Non' ?></h4>
-                                    <p class="mb-0 text-muted">Administrateur</p>
+                                    <h4 class="uppercase fw-bolder"><?= count($profileController->user->getComments()); ?></h4>
+                                    <p class="mb-0 text-muted">Nombre de commentaire(s) écrit</p>
                                 </div>
                             </div>
                         </div>

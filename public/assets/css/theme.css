@@ -83,6 +83,47 @@ footer {
     border: 0;
 }
 
+.mt-10 {
+    margin-top: 10rem !important;
+}
+
+.ml-1 {
+    margin-left: 1rem !important;
+}
+
+.date {
+    font-size: 11px
+}
+
+.comment-text {
+    font-size: 14px
+}
+
+.fs-12 {
+    font-size: 12px
+}
+
+.shadow-none {
+    box-shadow: none
+}
+
+.name {
+    color: #007bff;
+    text-transform: capitalize;
+}
+
+.cursor:hover {
+    color: blue
+}
+
+.cursor {
+    cursor: pointer
+}
+
+.textarea {
+    resize: none
+}
+
 /*
     default color :  114, 137, 218 (rgb)
     light : 172, 176, 255
