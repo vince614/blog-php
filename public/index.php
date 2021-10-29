@@ -17,7 +17,7 @@ session_start();
 
 // Require autoload
 require '../vendor/autoload.php';
-require '../app/App.php';
+require '../App/App.php';
 require '../Core/Exception/Exception.php';
 
 // Init app
