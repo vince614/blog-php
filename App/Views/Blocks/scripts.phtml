@@ -16,11 +16,14 @@ foreach ($this->getScripts() as $script): ?>
      *
      * @param msg
      * @param redirect
+     * @param reload
      */
-    function success(msg, redirect = null) {
+    function success(msg, redirect = null, reload = false) {
         if (confirm(msg)) {
             if (redirect) {
                 window.location.href = HOST_URL + redirect;
+            } else if (reload) {
+                window.location.reload();
             }
         }
     }

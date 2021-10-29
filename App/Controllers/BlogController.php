@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\App;
 use App\Entity\PostEntity;
+use App\Models\CommentModel;
 use App\Models\PostModel;
 use App\Models\UserModel;
 use App_Core_Exception;
@@ -21,6 +22,7 @@ class BlogController extends Controller
     const ADD_NEW_POST_ROUTE        = "new";
     const NEW_POST_REQUEST_TYPE     = "create";
     const DELETE_POST_REQUEST_TYPE  = "delete";
+    const ADD_COMMENT_REQUEST_TYPE  = "comment";
 
     /**
      * @var Request
@@ -36,6 +38,11 @@ class BlogController extends Controller
      * @var UserModel
      */
     protected $userModel;
+
+    /**
+     * @var CommentModel
+     */
+    protected $commentModel;
 
     /**
      * @var PostEntity[]
@@ -90,6 +97,7 @@ class BlogController extends Controller
         $this->request = new Request();
         $this->postModel = App::getModel('post');
         $this->userModel = App::getModel('user');
+        $this->commentModel = App::getModel('comment');
         $this->formValidation = new FormValidation();
         parent::__construct($path, $params);
     }
@@ -115,8 +123,14 @@ class BlogController extends Controller
             }
         } else if ($this->articleUrlKey) {
             $this->article = $this->postModel->load($this->articleUrlKey, 'url_key');
-            $this->setScript('post.js', Controller::ASSETS_PATH, Controller::JAVASCRIPT_TYPE);
+            $this
+                ->setScript('post.js', Controller::ASSETS_PATH, Controller::JAVASCRIPT_TYPE)
+                ->setScript('comment.js', Controller::FUNCTION_PATH, Controller::MODULE_TYPE);
             $this->meta->setTitle($this->article->getTitle());
+            $this->formValidation
+                ->generateToken()
+                ->saveTokenInSession('comment')
+                ->saveTokenInApp('comment');
         } else {
             $this->articles = $this->postModel->getCollection();
             $this->meta->setTitle('Liste des articles');
@@ -205,6 +219,31 @@ class BlogController extends Controller
                 }
                 $article->delete();
                 $ajaxObject->error("L'article à bien été supprimer");
+                break;
+            case self::ADD_COMMENT_REQUEST_TYPE:
+                $datas = $ajaxObject->getRequestDatas();
+
+                // Validate form
+                $this->validateCommentForm($datas);
+                if ($error = $this->formValidation->getError()) {
+                    $ajaxObject->error($error);
+                    $ajaxObject->sendResponse();
+                }
+
+                $comment = $this->commentModel->getEntity($this->commentModel->_entityName, [
+                    'content'       => htmlspecialchars($datas['comment']),
+                    'author_id'     => $userSession->getId(),
+                    'post_id'       => $datas['postId'],
+                    'is_verified'   => 0,
+                    'created_at'    => time()
+                ]);
+
+                $created = $this->commentModel->create($comment, $this->commentModel->_tableName);
+                $created ?
+                    $ajaxObject->success("Votre commentaire est en cours de validation !") :
+                    $ajaxObject->error("Une erreur c'est produite, veuillez réessayer");
+
+                break;
         }
         $ajaxObject->sendResponse();
     }
@@ -219,6 +258,18 @@ class BlogController extends Controller
         $this->formValidation
             ->verifyFormToken('blog', $datas['formToken'])
             ->checkResume($datas['resume']);
+    }
+
+    /**
+     * Validate comment form
+     *
+     * @param $datas
+     */
+    public function validateCommentForm($datas)
+    {
+        $this->formValidation
+            ->verifyFormToken('comment', $datas['formToken'])
+            ->checkResume($datas['comment']);
     }
 
 }

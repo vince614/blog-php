@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\App;
+use App\Models\CommentModel;
 use App\Models\PostModel;
 use App\Models\UserModel;
 use Core\Entity\Entity;
@@ -104,6 +105,20 @@ class UserEntity extends Entity
         /** @var PostModel $postModel */
         $postModel = App::getModel('post');
         return $postModel
+            ->addAttributToFilter('author_id', $this->getId())
+            ->getCollection();
+    }
+
+    /**
+     * Get all comments from user
+     *
+     * @return CommentEntity[]
+     */
+    public function getComments()
+    {
+        /** @var CommentModel $commentModel */
+        $commentModel = App::getModel('comment');
+        return $commentModel
             ->addAttributToFilter('author_id', $this->getId())
             ->getCollection();
     }
