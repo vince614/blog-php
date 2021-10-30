@@ -101,7 +101,7 @@ class Load
                             /** @var CommentEntity $comment */
                             $comment = $this->commentModel->getEntity($this->commentModel->_entityName, [
                                 'content'       => htmlspecialchars($this->faker->paragraph()),
-                                'author_id'     => $_user->getId(),
+                                'author_id'     => $this->faker->numberBetween(0, self::USERS_COUNT),
                                 'post_id'       => $_article->getId(),
                                 'is_verified'   => 1,
                                 'created_at'    => $time
