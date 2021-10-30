@@ -85,7 +85,7 @@ class Load
                         'title'         => $this->faker->sentence(),
                         'url_key'       => $this->faker->randomNumber(),
                         'resume'        => $this->faker->paragraph(),
-                        'content'       => htmlspecialchars($this->faker->paragraph(10)),
+                        'content'       => htmlspecialchars($this->faker->paragraph(100)),
                         'author_id'     => $_user->getId(),
                         'updated_at'    => $time,
                         'created_at'    => $time
