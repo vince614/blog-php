@@ -49,7 +49,7 @@ $userLogged = $userModel->getUserSession();
 
                 <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuLink"
                    role="button" data-mdb-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= App::getHost() ?>/public/assets/img/empty.png" class="rounded-circle" style="border: 3px solid rgba(255, 255, 255, .5)" height="40" alt="empty" loading="lazy"/>
+                    <img src="<?= $userLogged->getAvatar() ?>" class="rounded-circle" style="border: 3px solid rgba(255, 255, 255, .5)" height="40" alt="empty" loading="lazy"/>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
                     <li>

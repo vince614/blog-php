@@ -13,7 +13,7 @@ $profileController = $this->class;
             <div class="text-center card-box">
                 <div class="member-card pt-2 pb-2">
                     <div class="thumb-lg member-thumb mx-auto">
-                        <img src="<?= App::getHost() ?>/public/assets/img/empty.png" class="rounded-circle img-thumbnail" alt="profile-image">
+                        <img src="<?= $profileController->user->getAvatar() ?>" class="rounded-circle img-thumbnail" alt="profile-image">
                     </div>
                     <div class="">
                         <h4><?= $profileController->user->getName() ?></h4>
