@@ -28,7 +28,7 @@ class postForm extends Form {
      * Send data request
      */
     send() {
-        $.post(HOST_URL + '/blog', {
+        $.post(HOST_URL + '/article', {
             type: 'create',
             title: this.title,
             urlKey: this.urlKey,
@@ -40,7 +40,7 @@ class postForm extends Form {
             if (data.error) {
                 return alert(data.error);
             } else if (data.success) {
-                return success(data.success, '/blog');
+                return success(data.success, '/article');
             }
         });
     }

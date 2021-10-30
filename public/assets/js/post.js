@@ -1,6 +1,6 @@
 const deletePostButton = $('#delete-post-button');
 deletePostButton.click(function () {
-    $.post(HOST_URL + '/blog', {
+    $.post(HOST_URL + '/article', {
         type: 'delete',
         articleId: deletePostButton.data('id')
     }).done(function (data) {

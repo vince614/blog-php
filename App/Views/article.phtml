@@ -1,10 +1,10 @@
 <?php
 /** @var Render $this */
 use App\App;
-use App\Controllers\BlogController;
+use App\Controllers\ArticleController;
 use Core\Utils\Render;
 
-/** @var BlogController $blogController */
+/** @var ArticleController $blogController */
 $blogController = $this->class;
 ?>
 <div class="container px-4 p-5 d-flex flex-column justify-content-center align-items-center">
@@ -14,7 +14,7 @@ $blogController = $this->class;
         <div class="col-md-7 col-lg-8 col-xl-12 m-1">
             <?php foreach ($blogController->articles as $article): ?>
                 <div class="post-preview">
-                    <a href="<?= App::getHost() . '/blog/' . $article->getUrlKey() ?>">
+                    <a href="<?= App::getHost() . '/article/' . $article->getUrlKey() ?>">
                         <h2 class="fw-bolder darky fst-italic uppercase">
                             <?= $article->getTitle() ?>
                         </h2>

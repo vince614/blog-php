@@ -16,7 +16,7 @@ use Core\Utils\Request;
  * Class BlogController
  * @package App\Controllers
  */
-class BlogController extends Controller
+class ArticleController extends Controller
 {
 
     const ADD_NEW_POST_ROUTE        = "new";

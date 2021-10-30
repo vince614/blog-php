@@ -43,16 +43,16 @@ $router->get('/');
  * Blog list route
  * @GET & @POST METHOD
  */
-$router->get('/blog');
-$router->post('/blog');
+$router->get('/article');
+$router->post('/article');
 
 /**
  * Unique blog route
  * @GET METHOD
  */
-$router->get('/blog/:id', ACL::EVERYONE);
-$router->post('/blog/:id', ACL::LOGGED_IN);
-$router->get('/blog/:id/edit/', ACL::LOGGED_IN);
+$router->get('/article/:id', ACL::EVERYONE);
+$router->post('/article/:id', ACL::LOGGED_IN);
+$router->get('/article/:id/edit/', ACL::LOGGED_IN);
 
 /**
  * Unique blog route

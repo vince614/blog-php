@@ -23,7 +23,7 @@ $userLogged = $userModel->getUserSession();
         <div class="col-md-10 col-lg-8 col-xl-7">
             <?php foreach ($indexController->lastArticles as $article): ?>
                 <div class="post-preview">
-                    <a href="<?= App::getHost() . '/blog/' . $article->getUrlKey() ?>">
+                    <a href="<?= App::getHost() . '/article/' . $article->getUrlKey() ?>">
                         <h2 class="fw-bolder darky fst-italic uppercase"><?= $article->getTitle() ?></h2>
                     </a>
                     <p class="darky">
@@ -38,7 +38,7 @@ $userLogged = $userModel->getUserSession();
                 <hr class="my-4" />
             <?php endforeach; ?>
             <div class="d-flex justify-content-end mb-4">
-                <a class="btn btn-primary text-uppercase" href="<?= App::getHost() ?>/blog">plus de posts →</a>
+                <a class="btn btn-primary text-uppercase" href="<?= App::getHost() ?>/article">plus de posts →</a>
             </div>
         </div>
     </div>

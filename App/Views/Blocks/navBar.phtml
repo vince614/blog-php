@@ -21,7 +21,7 @@ $userLogged = $userModel->getUserSession();
                     <a class="nav-link" href="<?= App::getHost() ?>">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= App::getHost() ?>/blog">Articles</a>
+                    <a class="nav-link" href="<?= App::getHost() ?>/article">Articles</a>
                 </li>
                 <?php if ($userLogged && $userLogged->getIsAdmin()): ?>
                     <li class="nav-item">
@@ -56,7 +56,7 @@ $userLogged = $userModel->getUserSession();
                         <a class="dropdown-item" href="<?= App::getHost() ?>/profile/<?= $userLogged->getId() ?>">Mon profile</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="<?= App::getHost() ?>/blog/new">Ecrire un article</a>
+                        <a class="dropdown-item" href="<?= App::getHost() ?>/article/new">Ecrire un article</a>
                     </li>
                     <li>
                         <a class="dropdown-item text-danger" href="<?= App::getHost() ?>/logout">Se deconnecter</a>

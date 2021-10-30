@@ -22,7 +22,7 @@ class CommentForm extends Form {
      * Send data request
      */
     send() {
-        $.post(HOST_URL + '/blog', {
+        $.post(HOST_URL + '/article', {
             type: 'comment',
             comment: this.comment,
             postId: this.commentInput.data('post-id'),
