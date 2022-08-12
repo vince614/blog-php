@@ -17,11 +17,11 @@ $article = $blogController->article;
     <div class="form-horizontal d-flex justify-content-center flex-column w-100">
         <div class="form-group my-2">
             <label class="control-label col-sm-2" for="title">Title de l'article :</label>
-            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getTitle() ?>" <? endif; ?>
+            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getTitle() ?>" <?php endif; ?>
                 type="text" class="form-control" id="title" placeholder="Entrez le titre de l'article" name="title" required>
         </div>
         <?php if ($article = $blogController->article): ?>
-            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getUrlKey() ?>" style="display: none;" <? endif; ?>
+            <input <?php if ($article = $blogController->article): ?> value="<?= $article->getUrlKey() ?>" style="display: none;" <?php endif; ?>
                     type="text" class="form-control" id="url-key" name="url-key" required>
         <?php else: ?>
             <div class="form-group my-2">
